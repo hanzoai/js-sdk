@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { BillingBillingAddress } from './billing-billing-address';
 
 /**
  * 
@@ -26,6 +29,18 @@ export interface BillingTopupIn {
      * @memberof BillingTopupIn
      */
     'amountCents'?: number;
+    /**
+     * 
+     * @type {BillingBillingAddress}
+     * @memberof BillingTopupIn
+     */
+    'billingAddress'?: BillingBillingAddress;
+    /**
+     * Phone and Billing are what the buyer typed in the payment form; their name and email are the identity\'s, never a field here. They come after every older field so the plane layout of those fields holds across a rollout.
+     * @type {string}
+     * @memberof BillingTopupIn
+     */
+    'billingPhone'?: string;
     /**
      * Currency is the ISO-4217 code to charge in. Empty takes the deployment\'s own default.
      * @type {string}

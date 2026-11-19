@@ -62,6 +62,8 @@ import type { MarketplacePublishReq } from '../models';
 // @ts-ignore
 import type { MarketplaceShop } from '../models';
 // @ts-ignore
+import type { MarketplaceShopCapabilityWeights } from '../models';
+// @ts-ignore
 import type { MarketplaceShopListing } from '../models';
 // @ts-ignore
 import type { MarketplaceVerifyIn } from '../models';
@@ -232,7 +234,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
          * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
-         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool, expert or capability.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -308,8 +310,8 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
-         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
          * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {string} [category] Category keeps one category, exactly.
@@ -443,6 +445,40 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getMarketplaceShopById', 'id', id)
             const localVarPath = `/v1/marketplace/shop/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata. Only public capability listings with price 0 allow weight downloads; monetized capability listings keep their weights sealed and answer 403. It needs no credential.
+         * @summary Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata.
+         * @param {string} id ID is the listing, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShopByIdWeights: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMarketplaceShopByIdWeights', 'id', id)
+            const localVarPath = `/v1/marketplace/shop/{id}/weights`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -919,8 +955,8 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
-         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplacePublishReq} marketplacePublishReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1187,7 +1223,7 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
         /**
          * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind. A publisher only ever sees its own rows.
          * @summary Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy — optionally of one kind.
-         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
+         * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool, expert or capability.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1211,8 +1247,8 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
-         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {string} [q] Q keeps listings whose title, description, category, thing or seller contains every word of it, case-insensitively.
          * @param {string} [kind] Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
          * @param {string} [category] Category keeps one category, exactly.
@@ -1252,6 +1288,19 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShopById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceShopById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata. Only public capability listings with price 0 allow weight downloads; monetized capability listings keep their weights sealed and answer 403. It needs no credential.
+         * @summary Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata.
+         * @param {string} id ID is the listing, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceShopByIdWeights(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketplaceShopCapabilityWeights>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceShopByIdWeights(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceShopByIdWeights']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1403,8 +1452,8 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
-         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplacePublishReq} marketplacePublishReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1538,8 +1587,8 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getMarketplaceSeller(requestParameters.year, options).then((request) => request(axios, basePath));
         },
         /**
-         * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
-         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+         * Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
+         * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
          * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1556,6 +1605,16 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          */
         getMarketplaceShopById(requestParameters: MarketplaceApiGetMarketplaceShopByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceShopListing> {
             return localVarFp.getMarketplaceShopById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata. Only public capability listings with price 0 allow weight downloads; monetized capability listings keep their weights sealed and answer 403. It needs no credential.
+         * @summary Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata.
+         * @param {MarketplaceApiGetMarketplaceShopByIdWeightsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceShopByIdWeights(requestParameters: MarketplaceApiGetMarketplaceShopByIdWeightsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarketplaceShopCapabilityWeights> {
+            return localVarFp.getMarketplaceShopByIdWeights(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Edits one of the caller org\'s listings — its copy, price, payout wallet, visibility and documentation, and an expert\'s profile — under the same rules publish applies, and answers the listing as it now stands. Another org\'s listing and one that does not exist are the same 404. An org admin edits, and an expert edits their own listing.
@@ -1668,8 +1727,8 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.postMarketplaceJobsByIdRelease(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
-         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+         * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+         * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized.
          * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1776,7 +1835,7 @@ export interface MarketplaceApiGetMarketplaceJobsByIdRequest {
  */
 export interface MarketplaceApiGetMarketplaceListingsRequest {
     /**
-     * Kind keeps one kind: agent, persona, app, skill, mcp, tool or expert.
+     * Kind keeps one kind: agent, persona, app, skill, mcp, tool, expert or capability.
      * @type {string}
      * @memberof MarketplaceApiGetMarketplaceListings
      */
@@ -1947,6 +2006,20 @@ export interface MarketplaceApiGetMarketplaceShopByIdRequest {
      * ID is the listing, from the path.
      * @type {string}
      * @memberof MarketplaceApiGetMarketplaceShopById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMarketplaceShopByIdWeights operation in MarketplaceApi.
+ * @export
+ * @interface MarketplaceApiGetMarketplaceShopByIdWeightsRequest
+ */
+export interface MarketplaceApiGetMarketplaceShopByIdWeightsRequest {
+    /**
+     * ID is the listing, from the path.
+     * @type {string}
+     * @memberof MarketplaceApiGetMarketplaceShopByIdWeights
      */
     readonly id: string
 }
@@ -2296,8 +2369,8 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
-     * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
+     * Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged. Each listing carries its seller\'s public face, its reputation from settled jobs and installs, and the command and MCP operation that buy it. It needs no credential and answers the same to everyone.  With kind=expert it also takes sort and dir, language, verified, minLevel, badge, tokenTier, rateMin and rateMax, and product: the experts the ordinary filters match are kept by these, ordered and paged, and total is how many were kept (facets stay the ordinary filters\'). An expert whose reward profile is public shows it — level, points, the three rarest badges, the token tier — and each shows the products it scores highest in with the parts of the score, and those it ranks among the best three of all experts in. A private profile shows nothing of the rewards program and is put last by an order that reads it. A value a parameter cannot take, and any of these without kind=expert, is a 400.
+     * @summary Searches every public listing of every kind — agents and personas to hire, apps, skills, Kai capabilities, MCP servers and tools — newest first, with facets by kind, category, price and rating, paged.
      * @param {MarketplaceApiGetMarketplaceShopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2317,6 +2390,18 @@ export class MarketplaceApi extends BaseAPI {
      */
     public getMarketplaceShopById(requestParameters: MarketplaceApiGetMarketplaceShopByIdRequest, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).getMarketplaceShopById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata. Only public capability listings with price 0 allow weight downloads; monetized capability listings keep their weights sealed and answer 403. It needs no credential.
+     * @summary Downloads an open-source Kai capability listing\'s .tar weights (base64) and shared representation metadata.
+     * @param {MarketplaceApiGetMarketplaceShopByIdWeightsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public getMarketplaceShopByIdWeights(requestParameters: MarketplaceApiGetMarketplaceShopByIdWeightsRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceShopByIdWeights(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2452,8 +2537,8 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
-     * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill or MCP server, or, for the platform, a tool sold per call — optionally monetized.
+     * Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized. An expert is the exception to the org\'s admin: any member lists themself, once, as a person (kind expert), and is the listing\'s owner beside the org\'s admins. The owning app is asked, as the org, whether the thing is the org\'s, so a listing never sells something that does not exist or belongs to someone else: a tool every org reaches is the platform\'s, and a server enabled off the public shelf is the shelf\'s. A monetized listing names a payout wallet of the org\'s own, which wallets confirms, so a price is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. An org admin publishes, at most 1000 listings an org; it answers 201 with the created row.
+     * @summary Offers one thing the caller\'s org owns on the marketplace — an agent, persona, app, skill, Kai capability or MCP server, or, for the platform, a tool sold per call — optionally monetized.
      * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

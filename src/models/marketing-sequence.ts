@@ -21,6 +21,12 @@
  */
 export interface MarketingSequence {
     /**
+     * CancelEvent is an optional canonical analytics event (such as order_completed) that automatically cancels any active walk for that customer as soon as the event plane states it, so a paid buyer never receives an abandoned-checkout step.
+     * @type {string}
+     * @memberof MarketingSequence
+     */
+    'cancelEvent'?: string;
+    /**
      * CreatedAt is unix seconds when the sequence was registered, server-assigned and never rewritten.
      * @type {number}
      * @memberof MarketingSequence
@@ -44,6 +50,12 @@ export interface MarketingSequence {
      * @memberof MarketingSequence
      */
     'status'?: string;
+    /**
+     * TriggerEvent is an optional canonical analytics event (such as checkout_abandoned or generate_lead) that automatically enrolls the identified customer when the event plane states it while the sequence is active.
+     * @type {string}
+     * @memberof MarketingSequence
+     */
+    'triggerEvent'?: string;
     /**
      * UpdatedAt is unix seconds of the last status flip, server-assigned, and the key the sequence list is ordered by (newest first). Adding a step or enrolling a contact does NOT touch it — only draft/active/archived does — so it tracks activation rather than activity.
      * @type {number}

@@ -36,6 +36,8 @@ import type { CodeIndexIn } from '../models';
 // @ts-ignore
 import type { CodeIndexResult } from '../models';
 // @ts-ignore
+import type { CodeReindexResult } from '../models';
+// @ts-ignore
 import type { CodeRepoTree } from '../models';
 // @ts-ignore
 import type { CodeSearchResults } from '../models';
@@ -348,6 +350,40 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository. An index created in another space (another model, revision, dimension, normalization or task prefix) has every chunk embedded again, and its old vectors and the record of their space are replaced in the same transaction as the first new ones. An index already in this space keeps its vectors: the first chunk is embedded again to learn whether the model still answers at the index\'s dimension, then only the chunks that have no vector are, so a reindex that stopped part way is finished by calling it again. It requires ORG ADMIN, bills the embeddings to the caller\'s org and runs inline. An embedding failure part way answers 502 with how far it got; the index is then in the new space with the chunks it reached.  The request has no body. Response: {\"chunks\": 2048, \"embedded\": 2048, \"vectors\": 2048, \"model_revision\": \"zen-embedding\", \"dimensions\": 1024}
+         * @summary Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCodeReindex: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/code/reindex`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -454,6 +490,18 @@ export const CodeApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeIndex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository. An index created in another space (another model, revision, dimension, normalization or task prefix) has every chunk embedded again, and its old vectors and the record of their space are replaced in the same transaction as the first new ones. An index already in this space keeps its vectors: the first chunk is embedded again to learn whether the model still answers at the index\'s dimension, then only the chunks that have no vector are, so a reindex that stopped part way is finished by calling it again. It requires ORG ADMIN, bills the embeddings to the caller\'s org and runs inline. An embedding failure part way answers 502 with how far it got; the index is then in the new space with the chunks it reached.  The request has no body. Response: {\"chunks\": 2048, \"embedded\": 2048, \"vectors\": 2048, \"model_revision\": \"zen-embedding\", \"dimensions\": 1024}
+         * @summary Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCodeReindex(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeReindexResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeReindex(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeReindex']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -533,6 +581,15 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          */
         postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeIndexResult> {
             return localVarFp.postCodeIndex(requestParameters.codeIndexIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository. An index created in another space (another model, revision, dimension, normalization or task prefix) has every chunk embedded again, and its old vectors and the record of their space are replaced in the same transaction as the first new ones. An index already in this space keeps its vectors: the first chunk is embedded again to learn whether the model still answers at the index\'s dimension, then only the chunks that have no vector are, so a reindex that stopped part way is finished by calling it again. It requires ORG ADMIN, bills the embeddings to the caller\'s org and runs inline. An embedding failure part way answers 502 with how far it got; the index is then in the new space with the chunks it reached.  The request has no body. Response: {\"chunks\": 2048, \"embedded\": 2048, \"vectors\": 2048, \"model_revision\": \"zen-embedding\", \"dimensions\": 1024}
+         * @summary Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCodeReindex(options?: RawAxiosRequestConfig): AxiosPromise<CodeReindexResult> {
+            return localVarFp.postCodeReindex(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -759,6 +816,17 @@ export class CodeApi extends BaseAPI {
      */
     public postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig) {
         return CodeApiFp(this.configuration).postCodeIndex(requestParameters.codeIndexIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository. An index created in another space (another model, revision, dimension, normalization or task prefix) has every chunk embedded again, and its old vectors and the record of their space are replaced in the same transaction as the first new ones. An index already in this space keeps its vectors: the first chunk is embedded again to learn whether the model still answers at the index\'s dimension, then only the chunks that have no vector are, so a reindex that stopped part way is finished by calling it again. It requires ORG ADMIN, bills the embeddings to the caller\'s org and runs inline. An embedding failure part way answers 502 with how far it got; the index is then in the new space with the chunks it reached.  The request has no body. Response: {\"chunks\": 2048, \"embedded\": 2048, \"vectors\": 2048, \"model_revision\": \"zen-embedding\", \"dimensions\": 1024}
+     * @summary Rebuilds the caller org\'s code index in the embedding space this deployment embeds in, from the code the index already holds, across every repository.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CodeApi
+     */
+    public postCodeReindex(options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeReindex(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

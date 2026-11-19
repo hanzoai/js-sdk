@@ -21,6 +21,12 @@
  */
 export interface AgentCodingPullIn {
     /**
+     * Assignees are the GitHub logins it is assigned to. GitHub repositories only; a forge repository ignores them.
+     * @type {Array<string>}
+     * @memberof AgentCodingPullIn
+     */
+    'assignees'?: Array<string>;
+    /**
      * Base is the branch to propose into. Empty is the branch the run started from.
      * @type {string}
      * @memberof AgentCodingPullIn
@@ -38,6 +44,18 @@ export interface AgentCodingPullIn {
      * @memberof AgentCodingPullIn
      */
     'draft'?: boolean;
+    /**
+     * RequestID makes a retry of this request the same request, answered as the first was. The Idempotency-Key header is the same value, and wins when both are sent. Optional.
+     * @type {string}
+     * @memberof AgentCodingPullIn
+     */
+    'requestId'?: string;
+    /**
+     * Reviewers are the GitHub logins asked to review it. GitHub repositories only; a forge repository ignores them.
+     * @type {Array<string>}
+     * @memberof AgentCodingPullIn
+     */
+    'reviewers'?: Array<string>;
     /**
      * Session is the run\'s handle, from the path.
      * @type {string}

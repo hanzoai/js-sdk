@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface BillingPayPalPublicConfig
+ * @interface BillingWireReconcileIn
  */
-export interface BillingPayPalPublicConfig {
+export interface BillingWireReconcileIn {
     /**
-     * 
+     * AmountCents is what the bank received, in cents.
+     * @type {number}
+     * @memberof BillingWireReconcileIn
+     */
+    'amountCents'?: number;
+    /**
+     * BankReference is the bank\'s own reference for the transfer.
      * @type {string}
-     * @memberof BillingPayPalPublicConfig
+     * @memberof BillingWireReconcileIn
      */
-    'clientId'?: string;
+    'bankReference'?: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof BillingPayPalPublicConfig
-     */
-    'enabled'?: boolean;
-    /**
-     * 
+     * Reference is the reference the payer was shown beside the bank details (WIRE-...).
      * @type {string}
-     * @memberof BillingPayPalPublicConfig
+     * @memberof BillingWireReconcileIn
      */
-    'environment'?: string;
+    'reference'?: string;
 }
 

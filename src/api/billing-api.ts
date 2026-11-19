@@ -24,6 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { BillingAccounts } from '../models';
 // @ts-ignore
+import type { BillingAgentOrder } from '../models';
+// @ts-ignore
+import type { BillingAgentPayment } from '../models';
+// @ts-ignore
 import type { BillingAlert } from '../models';
 // @ts-ignore
 import type { BillingAlertPatch } from '../models';
@@ -42,7 +46,15 @@ import type { BillingCapVerdict } from '../models';
 // @ts-ignore
 import type { BillingCharged } from '../models';
 // @ts-ignore
+import type { BillingCheckoutChange } from '../models';
+// @ts-ignore
+import type { BillingCheckoutIn } from '../models';
+// @ts-ignore
+import type { BillingCheckoutView } from '../models';
+// @ts-ignore
 import type { BillingCollected } from '../models';
+// @ts-ignore
+import type { BillingCompleteIn } from '../models';
 // @ts-ignore
 import type { BillingCreditBalance } from '../models';
 // @ts-ignore
@@ -53,6 +65,10 @@ import type { BillingCryptoAsset } from '../models';
 import type { BillingCryptoDeposit } from '../models';
 // @ts-ignore
 import type { BillingCryptoOptions } from '../models';
+// @ts-ignore
+import type { BillingCryptoTopup } from '../models';
+// @ts-ignore
+import type { BillingCryptoTopupIn } from '../models';
 // @ts-ignore
 import type { BillingDetachment } from '../models';
 // @ts-ignore
@@ -66,6 +82,8 @@ import type { BillingHolder } from '../models';
 // @ts-ignore
 import type { BillingInvoice } from '../models';
 // @ts-ignore
+import type { BillingInvoicePayment } from '../models';
+// @ts-ignore
 import type { BillingInvoiceRef } from '../models';
 // @ts-ignore
 import type { BillingInvoices } from '../models';
@@ -76,11 +94,11 @@ import type { BillingModeIn } from '../models';
 // @ts-ignore
 import type { BillingPayPalOrderOut } from '../models';
 // @ts-ignore
-import type { BillingPaymentConfig } from '../models';
-// @ts-ignore
 import type { BillingPayout } from '../models';
 // @ts-ignore
 import type { BillingPaypalOrderIn } from '../models';
+// @ts-ignore
+import type { BillingPriceQuote } from '../models';
 // @ts-ignore
 import type { BillingRaiseIn } from '../models';
 // @ts-ignore
@@ -89,6 +107,10 @@ import type { BillingRecharge } from '../models';
 import type { BillingResize } from '../models';
 // @ts-ignore
 import type { BillingRollup } from '../models';
+// @ts-ignore
+import type { BillingRoute } from '../models';
+// @ts-ignore
+import type { BillingRouteIn } from '../models';
 // @ts-ignore
 import type { BillingSignedPayment } from '../models';
 // @ts-ignore
@@ -100,7 +122,19 @@ import type { BillingSubscriptions } from '../models';
 // @ts-ignore
 import type { BillingTier } from '../models';
 // @ts-ignore
+import type { BillingTokenIn } from '../models';
+// @ts-ignore
+import type { BillingTokenSupplied } from '../models';
+// @ts-ignore
 import type { BillingTopupIn } from '../models';
+// @ts-ignore
+import type { BillingTopupIntentCancelled } from '../models';
+// @ts-ignore
+import type { BillingTopupIntentIn } from '../models';
+// @ts-ignore
+import type { BillingTopupIntentOut } from '../models';
+// @ts-ignore
+import type { BillingTopupIntentState } from '../models';
 // @ts-ignore
 import type { BillingTransaction } from '../models';
 // @ts-ignore
@@ -110,7 +144,11 @@ import type { BillingUsageReceipt } from '../models';
 // @ts-ignore
 import type { BillingUsageReport } from '../models';
 // @ts-ignore
+import type { BillingWireCredit } from '../models';
+// @ts-ignore
 import type { BillingWireInstructions } from '../models';
+// @ts-ignore
+import type { BillingWireReconcileIn } from '../models';
 // @ts-ignore
 import type { ProblemDetails } from '../models';
 /**
@@ -560,6 +598,78 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Answers the plans on sale on the host\'s brand, the credit packs, and the payment types the org\'s processors take now (`shared_payment_token`, and `stablecoin` with the networks a deposit may use), as `{version, currency, plans, creditPacks, payment, links}`.  PUBLIC. A caller with no credential is served, and the catalog is the brand the request host names; one shared copy serves every anonymous reader. A caller with a credential is answered for its own org\'s processors and is never served the shared copy.
+         * @summary What is for sale in dollars and how it is paid for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/catalog`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete. A checkout waiting on a stablecoin deposit is completed here once the deposit has been credited. A checkout that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete.
+         * @param {string} id ID is the checkout, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCheckoutsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBillingCheckoutsById', 'id', id)
+            const localVarPath = `/v1/billing/checkouts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
@@ -806,6 +916,40 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.  PUBLIC. A caller with no credential is served, and one shared copy serves every anonymous reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingDiscovery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/discovery`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {string} [subject] 
@@ -925,10 +1069,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -962,10 +1102,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1052,6 +1188,44 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on. A checkout that is not complete has no order yet (404), and one that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on.
+         * @param {string} id ID is the checkout, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingOrdersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBillingOrdersById', 'id', id)
+            const localVarPath = `/v1/billing/orders/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
@@ -1104,10 +1278,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1141,6 +1311,75 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the price of what the caller is about to buy.
+         * @summary Answers the price of what the caller is about to buy.
+         * @param {string} [plan] Plan is the plan to price; absent when usdCents asks for credit.
+         * @param {number} [level] Level selects the plan\&#39;s published price level.
+         * @param {string} [interval] Interval selects the billing term, month or year.
+         * @param {number} [usdCents] UsdCents asks for an amount of credit when no plan is named.
+         * @param {string} [country] Country is the buyer\&#39;s ISO 3166-1 alpha-2 country; the edge\&#39;s geo country when absent.
+         * @param {string} [currency] Currency is the currency the buyer chose; the country\&#39;s default when absent.
+         * @param {string} [method] Method is the payment method the buyer chose, when they have.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingQuote: async (plan?: string, level?: number, interval?: string, usdCents?: number, country?: string, currency?: string, method?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/quote`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (plan !== undefined) {
+                localVarQueryParameter['plan'] = plan;
+            }
+
+            if (level !== undefined) {
+                localVarQueryParameter['level'] = level;
+            }
+
+            if (interval !== undefined) {
+                localVarQueryParameter['interval'] = interval;
+            }
+
+            if (usdCents !== undefined) {
+                localVarQueryParameter['usdCents'] = usdCents;
+            }
+
+            if (country !== undefined) {
+                localVarQueryParameter['country'] = country;
+            }
+
+            if (currency !== undefined) {
+                localVarQueryParameter['currency'] = currency;
+            }
+
+            if (method !== undefined) {
+                localVarQueryParameter['method'] = method;
+            }
 
 
     
@@ -1263,6 +1502,44 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          */
         getBillingTier: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/tier`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Says where one of the caller\'s own payments stands.
+         * @summary Says where one of the caller\'s own payments stands.
+         * @param {string} id ID is the payment, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingTopupIntentById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBillingTopupIntentById', 'id', id)
+            const localVarPath = `/v1/billing/topup/intent/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1644,6 +1921,94 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again. A checkout that is pending or complete can no longer be changed (409).  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again.
+         * @param {string} id ID is the checkout, from the path.
+         * @param {BillingCheckoutChange} billingCheckoutChange 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBillingCheckoutsById: async (id: string, billingCheckoutChange: BillingCheckoutChange, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchBillingCheckoutsById', 'id', id)
+            // verify required parameter 'billingCheckoutChange' is not null or undefined
+            assertParamExists('patchBillingCheckoutsById', 'billingCheckoutChange', billingCheckoutChange)
+            const localVarPath = `/v1/billing/checkouts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingCheckoutChange, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Pays an open invoice with the buyer present. A paid or declined payment answers 200 with the invoice and, for a decline, the reason. A card the bank asks to authenticate answers 402 with what the buyer finishes (code, id, clientSecret, publishableKey, quote, message). Paying twice is one payment.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pay an invoice with the buyer present
+         * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payInvoice: async (id: string, billingInvoiceRef: BillingInvoiceRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('payInvoice', 'id', id)
+            // verify required parameter 'billingInvoiceRef' is not null or undefined
+            assertParamExists('payInvoice', 'billingInvoiceRef', billingInvoiceRef)
+            const localVarPath = `/v1/billing/invoices/{id}/pay`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingInvoiceRef, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Opens a spend cap on the caller\'s own org.
          * @param {BillingAlertSpec} billingAlertSpec 
@@ -1677,6 +2042,94 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(billingAlertSpec, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it. Nothing is charged: a checkout is paid by completing it.  The checkout is the caller\'s own, and only the caller reads, changes or pays it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it.
+         * @param {BillingCheckoutIn} billingCheckoutIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCheckouts: async (billingCheckoutIn: BillingCheckoutIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingCheckoutIn' is not null or undefined
+            assertParamExists('postBillingCheckouts', 'billingCheckoutIn', billingCheckoutIn)
+            const localVarPath = `/v1/billing/checkouts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingCheckoutIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.  200 is complete, with the order. 202 waits on the buyer, and `next` says what to do: send the deposit, or take the bank\'s step. A refusal is 402 for a payment that was declined and 400, 404, 409, 422 or 429 for the rest, always with `error.code` to branch on.  The `Idempotency-Key` header is required. It binds the charge to this checkout, the buyer and the key, so completing twice is one purchase; the same key answers the same order, and another key on a checkout already paid is 409.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.
+         * @param {string} id ID is the checkout, from the path.
+         * @param {BillingCompleteIn} billingCompleteIn 
+         * @param {string} [idempotencyKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCheckoutsByIdComplete: async (id: string, billingCompleteIn: BillingCompleteIn, idempotencyKey?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postBillingCheckoutsByIdComplete', 'id', id)
+            // verify required parameter 'billingCompleteIn' is not null or undefined
+            assertParamExists('postBillingCheckoutsByIdComplete', 'billingCompleteIn', billingCompleteIn)
+            const localVarPath = `/v1/billing/checkouts/{id}/complete`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (idempotencyKey != null) {
+                localVarHeaderParameter['Idempotency-Key'] = String(idempotencyKey);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingCompleteIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1757,6 +2210,50 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(billingSignedPayment, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Pays one of the caller\'s past-due renewals with a fresh shared payment token. The token becomes the subscription\'s payment method when it carries a recurring interval that covers the renewal, and the invoice is charged on it now.  200 is paid. 402 is declined, with `error.code` to branch on, and the subscription keeps the method it had. An invoice that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s past-due renewals with a fresh shared payment token.
+         * @param {string} id ID is the invoice or the subscription, from the path.
+         * @param {BillingTokenIn} billingTokenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingInvoicesByIdAgentToken: async (id: string, billingTokenIn: BillingTokenIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postBillingInvoicesByIdAgentToken', 'id', id)
+            // verify required parameter 'billingTokenIn' is not null or undefined
+            assertParamExists('postBillingInvoicesByIdAgentToken', 'billingTokenIn', billingTokenIn)
+            const localVarPath = `/v1/billing/invoices/{id}/agent-token`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingTokenIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1950,6 +2447,46 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Answers which processor takes the caller\'s new checkout.
+         * @summary Answers which processor takes the caller\'s new checkout.
+         * @param {BillingRouteIn} billingRouteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingRoute: async (billingRouteIn: BillingRouteIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingRouteIn' is not null or undefined
+            assertParamExists('postBillingRoute', 'billingRouteIn', billingRouteIn)
+            const localVarPath = `/v1/billing/route`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingRouteIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
@@ -2018,6 +2555,50 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.  200 is accepted. 402 is declined, with `error.code` to branch on, and the subscription keeps the token it had. A subscription that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.
+         * @param {string} id ID is the invoice or the subscription, from the path.
+         * @param {BillingTokenIn} billingTokenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingSubscriptionsByIdAgentToken: async (id: string, billingTokenIn: BillingTokenIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postBillingSubscriptionsByIdAgentToken', 'id', id)
+            // verify required parameter 'billingTokenIn' is not null or undefined
+            assertParamExists('postBillingSubscriptionsByIdAgentToken', 'billingTokenIn', billingTokenIn)
+            const localVarPath = `/v1/billing/subscriptions/{id}/agent-token`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingTokenIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
@@ -2055,6 +2636,124 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(billingTopupIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network. Nothing is credited by this call: the wallet gets the dollars only when the deposit is confirmed on chain and the payment reported succeeded, once. Refused unless the account can take stablecoins now.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network.
+         * @param {BillingCryptoTopupIn} billingCryptoTopupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupCrypto: async (billingCryptoTopupIn: BillingCryptoTopupIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingCryptoTopupIn' is not null or undefined
+            assertParamExists('postBillingTopupCrypto', 'billingCryptoTopupIn', billingCryptoTopupIn)
+            const localVarPath = `/v1/billing/topup/crypto`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingCryptoTopupIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens the caller\'s Stripe checkout for a top-up.
+         * @summary Opens the caller\'s Stripe checkout for a top-up.
+         * @param {BillingTopupIntentIn} billingTopupIntentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupIntent: async (billingTopupIntentIn: BillingTopupIntentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingTopupIntentIn' is not null or undefined
+            assertParamExists('postBillingTopupIntent', 'billingTopupIntentIn', billingTopupIntentIn)
+            const localVarPath = `/v1/billing/topup/intent`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingTopupIntentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ends one of the caller\'s own payments that is not yet confirmed.
+         * @summary Ends one of the caller\'s own payments that is not yet confirmed.
+         * @param {string} id ID is the payment, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupIntentByIdCancel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postBillingTopupIntentByIdCancel', 'id', id)
+            const localVarPath = `/v1/billing/topup/intent/{id}/cancel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2139,6 +2838,46 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(billingUsageReport, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Credits the wallet that holds a wire\'s reference with the cents the bank received, once. A reference nobody was given credits nothing (404), a repeat posts nothing and answers `credited: false`, and a repeat for another amount is 409.  SuperAdmin only. Every reconcile is on the audit trail as wire.reconciled, naming who attested the receipt, and recorded by commerce as a billing event.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Credits the wallet that holds a wire\'s reference with the cents the bank received, once.
+         * @param {BillingWireReconcileIn} billingWireReconcileIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingWireReconcile: async (billingWireReconcileIn: BillingWireReconcileIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'billingWireReconcileIn' is not null or undefined
+            assertParamExists('postBillingWireReconcile', 'billingWireReconcileIn', billingWireReconcileIn)
+            const localVarPath = `/v1/billing/wire/reconcile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(billingWireReconcileIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2514,6 +3253,31 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the plans on sale on the host\'s brand, the credit packs, and the payment types the org\'s processors take now (`shared_payment_token`, and `stablecoin` with the networks a deposit may use), as `{version, currency, plans, creditPacks, payment, links}`.  PUBLIC. A caller with no credential is served, and the catalog is the brand the request host names; one shared copy serves every anonymous reader. A caller with a credential is answered for its own org\'s processors and is never served the shared copy.
+         * @summary What is for sale in dollars and how it is paid for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCatalog(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCatalog']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete. A checkout waiting on a stablecoin deposit is completed here once the deposit has been credited. A checkout that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete.
+         * @param {string} id ID is the checkout, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingCheckoutsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCheckoutView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCheckoutsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCheckoutsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
@@ -2600,6 +3364,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.  PUBLIC. A caller with no credential is served, and one shared copy serves every anonymous reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingDiscovery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingDiscovery(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingDiscovery']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {string} [subject] 
@@ -2681,6 +3457,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on. A checkout that is not complete has no order yet (404), and one that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on.
+         * @param {string} id ID is the checkout, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingOrdersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingAgentOrder>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingOrdersById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingOrdersById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
@@ -2717,6 +3506,25 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the price of what the caller is about to buy.
+         * @summary Answers the price of what the caller is about to buy.
+         * @param {string} [plan] Plan is the plan to price; absent when usdCents asks for credit.
+         * @param {number} [level] Level selects the plan\&#39;s published price level.
+         * @param {string} [interval] Interval selects the billing term, month or year.
+         * @param {number} [usdCents] UsdCents asks for an amount of credit when no plan is named.
+         * @param {string} [country] Country is the buyer\&#39;s ISO 3166-1 alpha-2 country; the edge\&#39;s geo country when absent.
+         * @param {string} [currency] Currency is the currency the buyer chose; the country\&#39;s default when absent.
+         * @param {string} [method] Method is the payment method the buyer chose, when they have.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingQuote(plan?: string, level?: number, interval?: string, usdCents?: number, country?: string, currency?: string, method?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPriceQuote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingQuote(plan, level, interval, usdCents, country, currency, method, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingQuote']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
          * @param {*} [options] Override http request option.
@@ -2734,7 +3542,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPaymentConfig>> {
+        async getBillingSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingSettings']?.[localVarOperationServerIndex]?.url;
@@ -2762,6 +3570,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTier(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTier']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Says where one of the caller\'s own payments stands.
+         * @summary Says where one of the caller\'s own payments stands.
+         * @param {string} id ID is the payment, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingTopupIntentById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingTopupIntentState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTopupIntentById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTopupIntentById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2883,6 +3704,34 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again. A checkout that is pending or complete can no longer be changed (409).  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again.
+         * @param {string} id ID is the checkout, from the path.
+         * @param {BillingCheckoutChange} billingCheckoutChange 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchBillingCheckoutsById(id: string, billingCheckoutChange: BillingCheckoutChange, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCheckoutView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchBillingCheckoutsById(id, billingCheckoutChange, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.patchBillingCheckoutsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Pays an open invoice with the buyer present. A paid or declined payment answers 200 with the invoice and, for a decline, the reason. A card the bank asks to authenticate answers 402 with what the buyer finishes (code, id, clientSecret, publishableKey, quote, message). Paying twice is one payment.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pay an invoice with the buyer present
+         * @param {string} id ID is the invoice id.
+         * @param {BillingInvoiceRef} billingInvoiceRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async payInvoice(id: string, billingInvoiceRef: BillingInvoiceRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInvoicePayment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.payInvoice(id, billingInvoiceRef, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.payInvoice']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Opens a spend cap on the caller\'s own org.
          * @param {BillingAlertSpec} billingAlertSpec 
@@ -2893,6 +3742,34 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingAlerts(billingAlertSpec, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingAlerts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it. Nothing is charged: a checkout is paid by completing it.  The checkout is the caller\'s own, and only the caller reads, changes or pays it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it.
+         * @param {BillingCheckoutIn} billingCheckoutIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingCheckouts(billingCheckoutIn: BillingCheckoutIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCheckoutView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCheckouts(billingCheckoutIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCheckouts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.  200 is complete, with the order. 202 waits on the buyer, and `next` says what to do: send the deposit, or take the bank\'s step. A refusal is 402 for a payment that was declined and 400, 404, 409, 422 or 429 for the rest, always with `error.code` to branch on.  The `Idempotency-Key` header is required. It binds the charge to this checkout, the buyer and the key, so completing twice is one purchase; the same key answers the same order, and another key on a checkout already paid is 409.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.
+         * @param {string} id ID is the checkout, from the path.
+         * @param {BillingCompleteIn} billingCompleteIn 
+         * @param {string} [idempotencyKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingCheckoutsByIdComplete(id: string, billingCompleteIn: BillingCompleteIn, idempotencyKey?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCheckoutsByIdComplete(id, billingCompleteIn, idempotencyKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCheckoutsByIdComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2919,6 +3796,20 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCryptoGateway(billingSignedPayment, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCryptoGateway']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Pays one of the caller\'s past-due renewals with a fresh shared payment token. The token becomes the subscription\'s payment method when it carries a recurring interval that covers the renewal, and the invoice is charged on it now.  200 is paid. 402 is declined, with `error.code` to branch on, and the subscription keeps the method it had. An invoice that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s past-due renewals with a fresh shared payment token.
+         * @param {string} id ID is the invoice or the subscription, from the path.
+         * @param {BillingTokenIn} billingTokenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingInvoicesByIdAgentToken(id: string, billingTokenIn: BillingTokenIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingAgentPayment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingInvoicesByIdAgentToken(id, billingTokenIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingInvoicesByIdAgentToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2985,6 +3876,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers which processor takes the caller\'s new checkout.
+         * @summary Answers which processor takes the caller\'s new checkout.
+         * @param {BillingRouteIn} billingRouteIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingRoute(billingRouteIn: BillingRouteIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingRoute>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingRoute(billingRouteIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingRoute']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
@@ -3009,6 +3913,20 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.  200 is accepted. 402 is declined, with `error.code` to branch on, and the subscription keeps the token it had. A subscription that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.
+         * @param {string} id ID is the invoice or the subscription, from the path.
+         * @param {BillingTokenIn} billingTokenIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingSubscriptionsByIdAgentToken(id: string, billingTokenIn: BillingTokenIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingTokenSupplied>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingSubscriptionsByIdAgentToken(id, billingTokenIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingSubscriptionsByIdAgentToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingTopupIn} billingTopupIn 
@@ -3020,6 +3938,45 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingTopup(billingTopupIn, xIdempotencyKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingTopup']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network. Nothing is credited by this call: the wallet gets the dollars only when the deposit is confirmed on chain and the payment reported succeeded, once. Refused unless the account can take stablecoins now.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network.
+         * @param {BillingCryptoTopupIn} billingCryptoTopupIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingTopupCrypto(billingCryptoTopupIn: BillingCryptoTopupIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCryptoTopup>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingTopupCrypto(billingCryptoTopupIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingTopupCrypto']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens the caller\'s Stripe checkout for a top-up.
+         * @summary Opens the caller\'s Stripe checkout for a top-up.
+         * @param {BillingTopupIntentIn} billingTopupIntentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingTopupIntent(billingTopupIntentIn: BillingTopupIntentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingTopupIntentOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingTopupIntent(billingTopupIntentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingTopupIntent']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Ends one of the caller\'s own payments that is not yet confirmed.
+         * @summary Ends one of the caller\'s own payments that is not yet confirmed.
+         * @param {string} id ID is the payment, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingTopupIntentByIdCancel(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingTopupIntentCancelled>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingTopupIntentByIdCancel(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingTopupIntentByIdCancel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3047,6 +4004,19 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingUsage(billingUsageReport, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingUsage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Credits the wallet that holds a wire\'s reference with the cents the bank received, once. A reference nobody was given credits nothing (404), a repeat posts nothing and answers `credited: false`, and a repeat for another amount is 409.  SuperAdmin only. Every reconcile is on the audit trail as wire.reconciled, naming who attested the receipt, and recorded by commerce as a billing event.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Credits the wallet that holds a wire\'s reference with the cents the bank received, once.
+         * @param {BillingWireReconcileIn} billingWireReconcileIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postBillingWireReconcile(billingWireReconcileIn: BillingWireReconcileIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingWireCredit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingWireReconcile(billingWireReconcileIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingWireReconcile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3235,6 +4205,25 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingBalance(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the plans on sale on the host\'s brand, the credit packs, and the payment types the org\'s processors take now (`shared_payment_token`, and `stablecoin` with the networks a deposit may use), as `{version, currency, plans, creditPacks, payment, links}`.  PUBLIC. A caller with no credential is served, and the catalog is the brand the request host names; one shared copy serves every anonymous reader. A caller with a credential is answered for its own org\'s processors and is never served the shared copy.
+         * @summary What is for sale in dollars and how it is paid for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingCatalog(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete. A checkout waiting on a stablecoin deposit is completed here once the deposit has been credited. A checkout that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete.
+         * @param {BillingApiGetBillingCheckoutsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCheckoutsById(requestParameters: BillingApiGetBillingCheckoutsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCheckoutView> {
+            return localVarFp.getBillingCheckoutsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
@@ -3300,6 +4289,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingCryptoOptions(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.  PUBLIC. A caller with no credential is served, and one shared copy serves every anonymous reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingDiscovery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingDiscovery(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {BillingApiGetBillingInvoicesRequest} requestParameters Request parameters.
@@ -3359,6 +4357,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingMethods(options).then((request) => request(axios, basePath));
         },
         /**
+         * Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on. A checkout that is not complete has no order yet (404), and one that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on.
+         * @param {BillingApiGetBillingOrdersByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingOrdersById(requestParameters: BillingApiGetBillingOrdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingAgentOrder> {
+            return localVarFp.getBillingOrdersById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
@@ -3386,6 +4394,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the price of what the caller is about to buy.
+         * @summary Answers the price of what the caller is about to buy.
+         * @param {BillingApiGetBillingQuoteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingQuote(requestParameters: BillingApiGetBillingQuoteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BillingPriceQuote> {
+            return localVarFp.getBillingQuote(requestParameters.plan, requestParameters.level, requestParameters.interval, requestParameters.usdCents, requestParameters.country, requestParameters.currency, requestParameters.method, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets). It is the same setting every prepaid AI account calls auto-reload.  An org that has never set one reads as disabled with zeroes rather than as an error — \"no rule\" answers the question — and `stored` is how a caller tells never-configured from deliberately-off.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Reads the auto-reload rule of the wallet the caller pays from — the org\'s own account, or a person\'s wallet in the signup org: top that balance up by `amountCents` whenever it falls below `thresholdCents`, charging that payer\'s card on file off-session, at most `perDay` times in a UTC day (0 is no daily limit, which the payer\'s plan sets).
          * @param {*} [options] Override http request option.
@@ -3400,7 +4418,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingSettings(options?: RawAxiosRequestConfig): AxiosPromise<BillingPaymentConfig> {
+        getBillingSettings(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getBillingSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -3420,6 +4438,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getBillingTier(options?: RawAxiosRequestConfig): AxiosPromise<BillingTier> {
             return localVarFp.getBillingTier(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Says where one of the caller\'s own payments stands.
+         * @summary Says where one of the caller\'s own payments stands.
+         * @param {BillingApiGetBillingTopupIntentByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingTopupIntentById(requestParameters: BillingApiGetBillingTopupIntentByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingTopupIntentState> {
+            return localVarFp.getBillingTopupIntentById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.  `count` is the size of the WHOLE history rather than of the page, which is how a reader knows there is more to ask for, and `user` echoes the wallet the page was read for — the same subject the spend gate debits, so a customer can see which account answered rather than guessing from their own token.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -3508,6 +4536,26 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.patchBillingAlertsById(requestParameters.id, requestParameters.billingAlertPatch, options).then((request) => request(axios, basePath));
         },
         /**
+         * Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again. A checkout that is pending or complete can no longer be changed (409).  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again.
+         * @param {BillingApiPatchBillingCheckoutsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBillingCheckoutsById(requestParameters: BillingApiPatchBillingCheckoutsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCheckoutView> {
+            return localVarFp.patchBillingCheckoutsById(requestParameters.id, requestParameters.billingCheckoutChange, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Pays an open invoice with the buyer present. A paid or declined payment answers 200 with the invoice and, for a decline, the reason. A card the bank asks to authenticate answers 402 with what the buyer finishes (code, id, clientSecret, publishableKey, quote, message). Paying twice is one payment.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pay an invoice with the buyer present
+         * @param {BillingApiPayInvoiceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payInvoice(requestParameters: BillingApiPayInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingInvoicePayment> {
+            return localVarFp.payInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Opens a spend cap on the caller\'s own org.
          * @param {BillingApiPostBillingAlertsRequest} requestParameters Request parameters.
@@ -3516,6 +4564,26 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingAlerts(requestParameters: BillingApiPostBillingAlertsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingAlert> {
             return localVarFp.postBillingAlerts(requestParameters.billingAlertSpec, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it. Nothing is charged: a checkout is paid by completing it.  The checkout is the caller\'s own, and only the caller reads, changes or pays it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it.
+         * @param {BillingApiPostBillingCheckoutsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCheckouts(requestParameters: BillingApiPostBillingCheckoutsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCheckoutView> {
+            return localVarFp.postBillingCheckouts(requestParameters.billingCheckoutIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.  200 is complete, with the order. 202 waits on the buyer, and `next` says what to do: send the deposit, or take the bank\'s step. A refusal is 402 for a payment that was declined and 400, 404, 409, 422 or 429 for the rest, always with `error.code` to branch on.  The `Idempotency-Key` header is required. It binds the charge to this checkout, the buyer and the key, so completing twice is one purchase; the same key answers the same order, and another key on a checkout already paid is 409.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.
+         * @param {BillingApiPostBillingCheckoutsByIdCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingCheckoutsByIdComplete(requestParameters: BillingApiPostBillingCheckoutsByIdCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.postBillingCheckoutsByIdComplete(requestParameters.id, requestParameters.billingCompleteIn, requestParameters.idempotencyKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address, a status and the terms: the minimum that credits, any fee, the confirmations required, and one line of instructions. Once the transfer is that deep the deposit is credited as cash to the caller\'s balance (GET /v1/billing/balance, cash) and its status is succeeded.  The asset is checked against GET /v1/billing/crypto/options before anything is minted. A chain, a token or a pair the rail does not accept is 400, and the answer lists the accepted chains, tokens and assets. A deposit rail with nothing watched is 503 — nothing sent now can be credited, and the Gateway rail or a card is the way to pay until it reopens.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -3536,6 +4604,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingCryptoGateway(requestParameters: BillingApiPostBillingCryptoGatewayRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingGatewayPayment> {
             return localVarFp.postBillingCryptoGateway(requestParameters.billingSignedPayment, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Pays one of the caller\'s past-due renewals with a fresh shared payment token. The token becomes the subscription\'s payment method when it carries a recurring interval that covers the renewal, and the invoice is charged on it now.  200 is paid. 402 is declined, with `error.code` to branch on, and the subscription keeps the method it had. An invoice that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Pays one of the caller\'s past-due renewals with a fresh shared payment token.
+         * @param {BillingApiPostBillingInvoicesByIdAgentTokenRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingInvoicesByIdAgentToken(requestParameters: BillingApiPostBillingInvoicesByIdAgentTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingAgentPayment> {
+            return localVarFp.postBillingInvoicesByIdAgentToken(requestParameters.id, requestParameters.billingTokenIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.  The org\'s cards are an admin\'s to add: a member billed from the org\'s account is refused 403 with a sentence naming who to ask. A member billed from a wallet of their own saves cards to that wallet.
@@ -3585,6 +4663,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingRechargeRunAll(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers which processor takes the caller\'s new checkout.
+         * @summary Answers which processor takes the caller\'s new checkout.
+         * @param {BillingApiPostBillingRouteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingRoute(requestParameters: BillingApiPostBillingRouteRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingRoute> {
+            return localVarFp.postBillingRoute(requestParameters.billingRouteIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
          * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
@@ -3603,6 +4691,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingSubscribeInvoice(options).then((request) => request(axios, basePath));
         },
         /**
+         * Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.  200 is accepted. 402 is declined, with `error.code` to branch on, and the subscription keeps the token it had. A subscription that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.
+         * @param {BillingApiPostBillingSubscriptionsByIdAgentTokenRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingSubscriptionsByIdAgentToken(requestParameters: BillingApiPostBillingSubscriptionsByIdAgentTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingTokenSupplied> {
+            return localVarFp.postBillingSubscriptionsByIdAgentToken(requestParameters.id, requestParameters.billingTokenIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
@@ -3611,6 +4709,36 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingTopup(requestParameters: BillingApiPostBillingTopupRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCharged> {
             return localVarFp.postBillingTopup(requestParameters.billingTopupIn, requestParameters.xIdempotencyKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network. Nothing is credited by this call: the wallet gets the dollars only when the deposit is confirmed on chain and the payment reported succeeded, once. Refused unless the account can take stablecoins now.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network.
+         * @param {BillingApiPostBillingTopupCryptoRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupCrypto(requestParameters: BillingApiPostBillingTopupCryptoRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingCryptoTopup> {
+            return localVarFp.postBillingTopupCrypto(requestParameters.billingCryptoTopupIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens the caller\'s Stripe checkout for a top-up.
+         * @summary Opens the caller\'s Stripe checkout for a top-up.
+         * @param {BillingApiPostBillingTopupIntentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupIntent(requestParameters: BillingApiPostBillingTopupIntentRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingTopupIntentOut> {
+            return localVarFp.postBillingTopupIntent(requestParameters.billingTopupIntentIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ends one of the caller\'s own payments that is not yet confirmed.
+         * @summary Ends one of the caller\'s own payments that is not yet confirmed.
+         * @param {BillingApiPostBillingTopupIntentByIdCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingTopupIntentByIdCancel(requestParameters: BillingApiPostBillingTopupIntentByIdCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingTopupIntentCancelled> {
+            return localVarFp.postBillingTopupIntentByIdCancel(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Charges a single-use card token and credits the caller\'s balance.  The token comes from the payment form and is vaulted as part of the charge, so no card number reaches this service and none is stored here. The receipt names the ledger entry, the new balance, and the PROCESSOR\'s own reference — which is the only field that proves money moved at the gateway rather than only in our ledger.  Retry-safe on X-Idempotency-Key: the same key settles one charge and returns the first receipt. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
@@ -3631,6 +4759,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postBillingUsage(requestParameters: BillingApiPostBillingUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingUsageReceipt> {
             return localVarFp.postBillingUsage(requestParameters.billingUsageReport, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Credits the wallet that holds a wire\'s reference with the cents the bank received, once. A reference nobody was given credits nothing (404), a repeat posts nothing and answers `credited: false`, and a repeat for another amount is 409.  SuperAdmin only. Every reconcile is on the audit trail as wire.reconciled, naming who attested the receipt, and recorded by commerce as a billing event.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Credits the wallet that holds a wire\'s reference with the cents the bank received, once.
+         * @param {BillingApiPostBillingWireReconcileRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postBillingWireReconcile(requestParameters: BillingApiPostBillingWireReconcileRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingWireCredit> {
+            return localVarFp.postBillingWireReconcile(requestParameters.billingWireReconcileIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the auto-reload rule of the wallet the caller pays from, and answers with the rule as stored.  The org\'s own account\'s rule is its admins\' to change, and the platform\'s; a member billed from a wallet of their own (a person in the signup org) changes that wallet\'s rule and no other (403 otherwise, with the plain sentence \"Only an admin of <org> can change its auto-reload. Ask an admin to do it.\"): the sweep charges the payer\'s default card with nobody there.  ENABLING REQUIRES A CARD ON FILE (400), because the sweep charges off-session: a rule naming no chargeable method is a promise the schedule cannot keep. The amount is a top-up\'s own range, $5 to $5,000, and the balance it reloads below is $0 to $5,000; a value outside either is refused the same way, the range in the sentence. The sweep reloads at most `perDay` times in a UTC day.  The rule is the payer\'s OWN. The org and the wallet come from the validated principal and the body names neither, so there is no field a write could be steered through onto another payer\'s schedule.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -3840,6 +4978,20 @@ export interface BillingApiGetBillingAlertsAuthorizeRequest {
 }
 
 /**
+ * Request parameters for getBillingCheckoutsById operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingCheckoutsByIdRequest
+ */
+export interface BillingApiGetBillingCheckoutsByIdRequest {
+    /**
+     * ID is the checkout, as the open call answered it.
+     * @type {string}
+     * @memberof BillingApiGetBillingCheckoutsById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for getBillingCryptoDepositById operation in BillingApi.
  * @export
  * @interface BillingApiGetBillingCryptoDepositByIdRequest
@@ -3966,6 +5118,90 @@ export interface BillingApiGetBillingLedgerRequest {
 }
 
 /**
+ * Request parameters for getBillingOrdersById operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingOrdersByIdRequest
+ */
+export interface BillingApiGetBillingOrdersByIdRequest {
+    /**
+     * ID is the checkout, as the open call answered it.
+     * @type {string}
+     * @memberof BillingApiGetBillingOrdersById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getBillingQuote operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingQuoteRequest
+ */
+export interface BillingApiGetBillingQuoteRequest {
+    /**
+     * Plan is the plan to price; absent when usdCents asks for credit.
+     * @type {string}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly plan?: string
+
+    /**
+     * Level selects the plan\&#39;s published price level.
+     * @type {number}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly level?: number
+
+    /**
+     * Interval selects the billing term, month or year.
+     * @type {string}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly interval?: string
+
+    /**
+     * UsdCents asks for an amount of credit when no plan is named.
+     * @type {number}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly usdCents?: number
+
+    /**
+     * Country is the buyer\&#39;s ISO 3166-1 alpha-2 country; the edge\&#39;s geo country when absent.
+     * @type {string}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly country?: string
+
+    /**
+     * Currency is the currency the buyer chose; the country\&#39;s default when absent.
+     * @type {string}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly currency?: string
+
+    /**
+     * Method is the payment method the buyer chose, when they have.
+     * @type {string}
+     * @memberof BillingApiGetBillingQuote
+     */
+    readonly method?: string
+}
+
+/**
+ * Request parameters for getBillingTopupIntentById operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingTopupIntentByIdRequest
+ */
+export interface BillingApiGetBillingTopupIntentByIdRequest {
+    /**
+     * ID is the payment, as the open call answered it.
+     * @type {string}
+     * @memberof BillingApiGetBillingTopupIntentById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for getBillingTransactions operation in BillingApi.
  * @export
  * @interface BillingApiGetBillingTransactionsRequest
@@ -4071,6 +5307,48 @@ export interface BillingApiPatchBillingAlertsByIdRequest {
 }
 
 /**
+ * Request parameters for patchBillingCheckoutsById operation in BillingApi.
+ * @export
+ * @interface BillingApiPatchBillingCheckoutsByIdRequest
+ */
+export interface BillingApiPatchBillingCheckoutsByIdRequest {
+    /**
+     * ID is the checkout, from the path.
+     * @type {string}
+     * @memberof BillingApiPatchBillingCheckoutsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingCheckoutChange}
+     * @memberof BillingApiPatchBillingCheckoutsById
+     */
+    readonly billingCheckoutChange: BillingCheckoutChange
+}
+
+/**
+ * Request parameters for payInvoice operation in BillingApi.
+ * @export
+ * @interface BillingApiPayInvoiceRequest
+ */
+export interface BillingApiPayInvoiceRequest {
+    /**
+     * ID is the invoice id.
+     * @type {string}
+     * @memberof BillingApiPayInvoice
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingInvoiceRef}
+     * @memberof BillingApiPayInvoice
+     */
+    readonly billingInvoiceRef: BillingInvoiceRef
+}
+
+/**
  * Request parameters for postBillingAlerts operation in BillingApi.
  * @export
  * @interface BillingApiPostBillingAlertsRequest
@@ -4082,6 +5360,48 @@ export interface BillingApiPostBillingAlertsRequest {
      * @memberof BillingApiPostBillingAlerts
      */
     readonly billingAlertSpec: BillingAlertSpec
+}
+
+/**
+ * Request parameters for postBillingCheckouts operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingCheckoutsRequest
+ */
+export interface BillingApiPostBillingCheckoutsRequest {
+    /**
+     * 
+     * @type {BillingCheckoutIn}
+     * @memberof BillingApiPostBillingCheckouts
+     */
+    readonly billingCheckoutIn: BillingCheckoutIn
+}
+
+/**
+ * Request parameters for postBillingCheckoutsByIdComplete operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingCheckoutsByIdCompleteRequest
+ */
+export interface BillingApiPostBillingCheckoutsByIdCompleteRequest {
+    /**
+     * ID is the checkout, from the path.
+     * @type {string}
+     * @memberof BillingApiPostBillingCheckoutsByIdComplete
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingCompleteIn}
+     * @memberof BillingApiPostBillingCheckoutsByIdComplete
+     */
+    readonly billingCompleteIn: BillingCompleteIn
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiPostBillingCheckoutsByIdComplete
+     */
+    readonly idempotencyKey?: string
 }
 
 /**
@@ -4110,6 +5430,27 @@ export interface BillingApiPostBillingCryptoGatewayRequest {
      * @memberof BillingApiPostBillingCryptoGateway
      */
     readonly billingSignedPayment: BillingSignedPayment
+}
+
+/**
+ * Request parameters for postBillingInvoicesByIdAgentToken operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingInvoicesByIdAgentTokenRequest
+ */
+export interface BillingApiPostBillingInvoicesByIdAgentTokenRequest {
+    /**
+     * ID is the invoice or the subscription, from the path.
+     * @type {string}
+     * @memberof BillingApiPostBillingInvoicesByIdAgentToken
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingTokenIn}
+     * @memberof BillingApiPostBillingInvoicesByIdAgentToken
+     */
+    readonly billingTokenIn: BillingTokenIn
 }
 
 /**
@@ -4148,6 +5489,41 @@ export interface BillingApiPostBillingPaypalOrderRequest {
 }
 
 /**
+ * Request parameters for postBillingRoute operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingRouteRequest
+ */
+export interface BillingApiPostBillingRouteRequest {
+    /**
+     * 
+     * @type {BillingRouteIn}
+     * @memberof BillingApiPostBillingRoute
+     */
+    readonly billingRouteIn: BillingRouteIn
+}
+
+/**
+ * Request parameters for postBillingSubscriptionsByIdAgentToken operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingSubscriptionsByIdAgentTokenRequest
+ */
+export interface BillingApiPostBillingSubscriptionsByIdAgentTokenRequest {
+    /**
+     * ID is the invoice or the subscription, from the path.
+     * @type {string}
+     * @memberof BillingApiPostBillingSubscriptionsByIdAgentToken
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BillingTokenIn}
+     * @memberof BillingApiPostBillingSubscriptionsByIdAgentToken
+     */
+    readonly billingTokenIn: BillingTokenIn
+}
+
+/**
  * Request parameters for postBillingTopup operation in BillingApi.
  * @export
  * @interface BillingApiPostBillingTopupRequest
@@ -4166,6 +5542,48 @@ export interface BillingApiPostBillingTopupRequest {
      * @memberof BillingApiPostBillingTopup
      */
     readonly xIdempotencyKey?: string
+}
+
+/**
+ * Request parameters for postBillingTopupCrypto operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingTopupCryptoRequest
+ */
+export interface BillingApiPostBillingTopupCryptoRequest {
+    /**
+     * 
+     * @type {BillingCryptoTopupIn}
+     * @memberof BillingApiPostBillingTopupCrypto
+     */
+    readonly billingCryptoTopupIn: BillingCryptoTopupIn
+}
+
+/**
+ * Request parameters for postBillingTopupIntent operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingTopupIntentRequest
+ */
+export interface BillingApiPostBillingTopupIntentRequest {
+    /**
+     * 
+     * @type {BillingTopupIntentIn}
+     * @memberof BillingApiPostBillingTopupIntent
+     */
+    readonly billingTopupIntentIn: BillingTopupIntentIn
+}
+
+/**
+ * Request parameters for postBillingTopupIntentByIdCancel operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingTopupIntentByIdCancelRequest
+ */
+export interface BillingApiPostBillingTopupIntentByIdCancelRequest {
+    /**
+     * ID is the payment, as the open call answered it.
+     * @type {string}
+     * @memberof BillingApiPostBillingTopupIntentByIdCancel
+     */
+    readonly id: string
 }
 
 /**
@@ -4201,6 +5619,20 @@ export interface BillingApiPostBillingUsageRequest {
      * @memberof BillingApiPostBillingUsage
      */
     readonly billingUsageReport: BillingUsageReport
+}
+
+/**
+ * Request parameters for postBillingWireReconcile operation in BillingApi.
+ * @export
+ * @interface BillingApiPostBillingWireReconcileRequest
+ */
+export interface BillingApiPostBillingWireReconcileRequest {
+    /**
+     * 
+     * @type {BillingWireReconcileIn}
+     * @memberof BillingApiPostBillingWireReconcile
+     */
+    readonly billingWireReconcileIn: BillingWireReconcileIn
 }
 
 /**
@@ -4431,6 +5863,29 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Answers the plans on sale on the host\'s brand, the credit packs, and the payment types the org\'s processors take now (`shared_payment_token`, and `stablecoin` with the networks a deposit may use), as `{version, currency, plans, creditPacks, payment, links}`.  PUBLIC. A caller with no credential is served, and the catalog is the brand the request host names; one shared copy serves every anonymous reader. A caller with a credential is answered for its own org\'s processors and is never served the shared copy.
+     * @summary What is for sale in dollars and how it is paid for
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingCatalog(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingCatalog(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete. A checkout waiting on a stablecoin deposit is completed here once the deposit has been credited. A checkout that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers where one of the caller\'s own checkouts stands: open, pending, complete or failed, with the next step while it waits on the buyer and the order once it is complete.
+     * @param {BillingApiGetBillingCheckoutsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingCheckoutsById(requestParameters: BillingApiGetBillingCheckoutsByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingCheckoutsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Answers what the caller can spend right now, one entry per currency.
      * @param {*} [options] Override http request option.
@@ -4510,6 +5965,17 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.  PUBLIC. A caller with no credential is served, and one shared copy serves every anonymous reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers where the purchase surface is and what it speaks: its version, the paths of its parts, the checkout\'s verbs in order, the payment types a checkout completes with, and how a subscription is renewed by an agent.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingDiscovery(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingDiscovery(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Lists the caller\'s invoices, newest first, with the count beside them.
      * @param {BillingApiGetBillingInvoicesRequest} requestParameters Request parameters.
@@ -4581,6 +6047,18 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on. A checkout that is not complete has no order yet (404), and one that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Confirms a completed checkout: the order, what it cost, what the wallet was credited or the subscription it opened, and for a subscription what is left on the token it renews on.
+     * @param {BillingApiGetBillingOrdersByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingOrdersById(requestParameters: BillingApiGetBillingOrdersByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingOrdersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
      * @param {*} [options] Override http request option.
@@ -4611,6 +6089,18 @@ export class BillingApi extends BaseAPI {
      */
     public getBillingPortalMethods(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getBillingPortalMethods(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the price of what the caller is about to buy.
+     * @summary Answers the price of what the caller is about to buy.
+     * @param {BillingApiGetBillingQuoteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingQuote(requestParameters: BillingApiGetBillingQuoteRequest = {}, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingQuote(requestParameters.plan, requestParameters.level, requestParameters.interval, requestParameters.usdCents, requestParameters.country, requestParameters.currency, requestParameters.method, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4655,6 +6145,18 @@ export class BillingApi extends BaseAPI {
      */
     public getBillingTier(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getBillingTier(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Says where one of the caller\'s own payments stands.
+     * @summary Says where one of the caller\'s own payments stands.
+     * @param {BillingApiGetBillingTopupIntentByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingTopupIntentById(requestParameters: BillingApiGetBillingTopupIntentByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingTopupIntentById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4762,6 +6264,30 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again. A checkout that is pending or complete can no longer be changed (409).  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Replaces the item of one of the caller\'s checkouts that is still open, or failed, and prices it again.
+     * @param {BillingApiPatchBillingCheckoutsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public patchBillingCheckoutsById(requestParameters: BillingApiPatchBillingCheckoutsByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).patchBillingCheckoutsById(requestParameters.id, requestParameters.billingCheckoutChange, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Pays an open invoice with the buyer present. A paid or declined payment answers 200 with the invoice and, for a decline, the reason. A card the bank asks to authenticate answers 402 with what the buyer finishes (code, id, clientSecret, publishableKey, quote, message). Paying twice is one payment.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Pay an invoice with the buyer present
+     * @param {BillingApiPayInvoiceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public payInvoice(requestParameters: BillingApiPayInvoiceRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).payInvoice(requestParameters.id, requestParameters.billingInvoiceRef, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Opens a spend cap on the caller\'s own org.
      * @param {BillingApiPostBillingAlertsRequest} requestParameters Request parameters.
@@ -4771,6 +6297,30 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingAlerts(requestParameters: BillingApiPostBillingAlertsRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingAlerts(requestParameters.billingAlertSpec, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it. Nothing is charged: a checkout is paid by completing it.  The checkout is the caller\'s own, and only the caller reads, changes or pays it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Opens a checkout for exactly one item, USD credit (`kind: \"credit\"`, `usdCents`) or a plan\'s first period (`kind: \"plan\"`, `plan`, `interval`), and answers it priced as the sale prices it.
+     * @param {BillingApiPostBillingCheckoutsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingCheckouts(requestParameters: BillingApiPostBillingCheckoutsRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingCheckouts(requestParameters.billingCheckoutIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.  200 is complete, with the order. 202 waits on the buyer, and `next` says what to do: send the deposit, or take the bank\'s step. A refusal is 402 for a payment that was declined and 400, 404, 409, 422 or 429 for the rest, always with `error.code` to branch on.  The `Idempotency-Key` header is required. It binds the charge to this checkout, the buyer and the key, so completing twice is one purchase; the same key answers the same order, and another key on a checkout already paid is 409.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Pays one of the caller\'s checkouts with a shared payment token the buyer granted the agent (`{\"payment\":{\"type\":\"shared_payment_token\",\"token\":\"spt_...\"}}`) or with a stablecoin deposit (`{\"payment\":{\"type\":\"stablecoin\",\"network\":\"base\"}}`), and answers the checkout under the status the attempt earned.
+     * @param {BillingApiPostBillingCheckoutsByIdCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingCheckoutsByIdComplete(requestParameters: BillingApiPostBillingCheckoutsByIdCompleteRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingCheckoutsByIdComplete(requestParameters.id, requestParameters.billingCompleteIn, requestParameters.idempotencyKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4795,6 +6345,18 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingCryptoGateway(requestParameters: BillingApiPostBillingCryptoGatewayRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingCryptoGateway(requestParameters.billingSignedPayment, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Pays one of the caller\'s past-due renewals with a fresh shared payment token. The token becomes the subscription\'s payment method when it carries a recurring interval that covers the renewal, and the invoice is charged on it now.  200 is paid. 402 is declined, with `error.code` to branch on, and the subscription keeps the method it had. An invoice that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Pays one of the caller\'s past-due renewals with a fresh shared payment token.
+     * @param {BillingApiPostBillingInvoicesByIdAgentTokenRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingInvoicesByIdAgentToken(requestParameters: BillingApiPostBillingInvoicesByIdAgentTokenRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingInvoicesByIdAgentToken(requestParameters.id, requestParameters.billingTokenIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4855,6 +6417,18 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Answers which processor takes the caller\'s new checkout.
+     * @summary Answers which processor takes the caller\'s new checkout.
+     * @param {BillingApiPostBillingRouteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingRoute(requestParameters: BillingApiPostBillingRouteRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingRoute(requestParameters.billingRouteIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  `interval` picks the term: \"month\" (the default) or \"year\", which charges the plan\'s annual total now and renews yearly. A plan with no annual price refuses \"year\".  `lines` are a team\'s other seat types, bought on the same subscription: `[{\"planId\":\"team-premium\",\"quantity\":1}]` beside `planId` \"team\" and `quantity` 1 is a team of one standard and one premium seat, charged both seats\' prices. A team is at least two members across every seat type and at most 100; a line of a plan that is not a seat type of the team is 400 before any card is charged.  `coupon` is a plan coupon code (case-insensitive) for a percent off the FIRST month only; renewals bill the catalog price. It is a code, never an amount. A code that is unknown, expired, used up, not for this plan, or sent with annual billing or prepaid credit is 400, and one this org or this card has already redeemed is 409 — before any card is charged, never a silent full-price sale. The receipt names the coupon and its percent.  `wallet: true` says `sourceId` is a wallet\'s single-use token (Apple Pay, Google Pay, Cash App Pay). The first period is authorized on the wallet, any coupon is held against the org and the card behind it, and only then is the payment captured; a coupon already used by either voids the hold and is 409. Cash App Pay names no card, so a coupon with it is 400. The token is kept nowhere, so the plan renews only once a card plan follows it: a plan\'s period is charged to a card on file, never to the prepaid balance, which pays for usage. A `sourceId` of \"balance\" or \"credits\" is 400 `plan_needs_card`.  Bought while the account holds a plan paid outside checkout (a wire, a comp) or one the balance used to renew, the card plan starts when that plan ends: the card is kept now and charged then, nothing is charged today, and the receipt states `startsAt`, `startsCents` and `follows`.  `balanceCents` is an organization\'s starting usage balance, bought in the same payment as the seats: `amountCents` is seats x price plus it, the invoice holds the seats and the balance is credited to the organization\'s prepaid balance (`balanceCents`, `balanceId` on the receipt). It is whole dollars and at most the plan\'s `limits.balanceCeiling`; one that is not, a plan that states no ceiling, or a balance sent with a wallet token or on a plan that starts later is 400 before any card is charged. A plan whose limits state how an organization orders it (spend limits, balance months, a ceiling) is bought only for the organization, by its admin, on a request that selects it with X-Org-Id; one that selects none is 400 (\"choose the organization to buy for\") before any card is charged. Whether the buyer administers it is asked of IAM at the sale, not read off the token: 403 when IAM no longer names them an admin, 503 when it cannot answer.  `consent` is the choice the checkout page holds, as @hanzo/event spells it (\"analytics,marketing,ads\"). The sale reaches an ad platform only under it. It counts only from a browser (a request with Sec-Fetch-Site), and a browser that sends GPC or DNT has allowed nothing, whatever the page says.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.  The org\'s plan is bought only by an admin of the org or the platform: a member billed from the org\'s account is refused 403, before any card is charged, with a sentence naming who to ask. A member billed from a wallet of their own buys a plan for that wallet.
      * @summary Buy a plan with a card
      * @param {*} [options] Override http request option.
@@ -4877,6 +6451,18 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.  200 is accepted. 402 is declined, with `error.code` to branch on, and the subscription keeps the token it had. A subscription that is not the caller\'s is 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Replaces the token one of the caller\'s subscriptions renews on with a fresh one that covers the next renewal, before the renewal is attempted, and answers what is left on it.
+     * @param {BillingApiPostBillingSubscriptionsByIdAgentTokenRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingSubscriptionsByIdAgentToken(requestParameters: BillingApiPostBillingSubscriptionsByIdAgentTokenRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingSubscriptionsByIdAgentToken(requestParameters.id, requestParameters.billingTokenIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.  The org\'s card on file is charged only by an admin of the org or the platform; a member is refused with 403 and told to ask an admin. A member billed from a wallet of their own charges that wallet\'s card. An org selected with X-Org-Id that the sign-in does not list is 409, and nothing is charged.
      * @summary Charges a card the caller already saved and credits the balance.
      * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
@@ -4886,6 +6472,42 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingTopup(requestParameters: BillingApiPostBillingTopupRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingTopup(requestParameters.billingTopupIn, requestParameters.xIdempotencyKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network. Nothing is credited by this call: the wallet gets the dollars only when the deposit is confirmed on chain and the payment reported succeeded, once. Refused unless the account can take stablecoins now.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Opens a stablecoin deposit for a top-up of the caller\'s own wallet and answers where to send it, per network.
+     * @param {BillingApiPostBillingTopupCryptoRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingTopupCrypto(requestParameters: BillingApiPostBillingTopupCryptoRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingTopupCrypto(requestParameters.billingCryptoTopupIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens the caller\'s Stripe checkout for a top-up.
+     * @summary Opens the caller\'s Stripe checkout for a top-up.
+     * @param {BillingApiPostBillingTopupIntentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingTopupIntent(requestParameters: BillingApiPostBillingTopupIntentRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingTopupIntent(requestParameters.billingTopupIntentIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ends one of the caller\'s own payments that is not yet confirmed.
+     * @summary Ends one of the caller\'s own payments that is not yet confirmed.
+     * @param {BillingApiPostBillingTopupIntentByIdCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingTopupIntentByIdCancel(requestParameters: BillingApiPostBillingTopupIntentByIdCancelRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingTopupIntentByIdCancel(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4910,6 +6532,18 @@ export class BillingApi extends BaseAPI {
      */
     public postBillingUsage(requestParameters: BillingApiPostBillingUsageRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingUsage(requestParameters.billingUsageReport, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Credits the wallet that holds a wire\'s reference with the cents the bank received, once. A reference nobody was given credits nothing (404), a repeat posts nothing and answers `credited: false`, and a repeat for another amount is 409.  SuperAdmin only. Every reconcile is on the audit trail as wire.reconciled, naming who attested the receipt, and recorded by commerce as a billing event.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Credits the wallet that holds a wire\'s reference with the cents the bank received, once.
+     * @param {BillingApiPostBillingWireReconcileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postBillingWireReconcile(requestParameters: BillingApiPostBillingWireReconcileRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingWireReconcile(requestParameters.billingWireReconcileIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

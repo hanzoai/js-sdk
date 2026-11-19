@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketplaceCapabilityIn } from './marketplace-capability-in';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketplaceExpertIn } from './marketplace-expert-in';
 
 /**
@@ -23,6 +26,12 @@ import type { MarketplaceExpertIn } from './marketplace-expert-in';
  * @interface MarketplacePatchReq
  */
 export interface MarketplacePatchReq {
+    /**
+     * Capability updates a capability listing\'s license; refused on any other kind.
+     * @type {MarketplaceCapabilityIn}
+     * @memberof MarketplacePatchReq
+     */
+    'capability'?: MarketplaceCapabilityIn;
     /**
      * Category groups the listing in the shop window.
      * @type {string}

@@ -21,7 +21,7 @@
  */
 export interface BillingCharged {
     /**
-     * BalanceCents is the subject\'s balance AFTER the charge settled, in cents, so a caller does not have to re-read to show the new number.
+     * BalanceCents is the subject\'s balance AFTER the charge settled, in cents, read from the ledger GET /v1/billing/balance reads, so a caller does not have to re-read to show the new number. It is absent when that ledger could not say.
      * @type {number}
      * @memberof BillingCharged
      */

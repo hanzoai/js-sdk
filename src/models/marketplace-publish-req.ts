@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketplaceCapabilityIn } from './marketplace-capability-in';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketplaceExpertIn } from './marketplace-expert-in';
 
 /**
@@ -23,6 +26,12 @@ import type { MarketplaceExpertIn } from './marketplace-expert-in';
  * @interface MarketplacePublishReq
  */
 export interface MarketplacePublishReq {
+    /**
+     * Capability carries optional publisher preferences for a listing of kind capability (such as its open-source license). Refused on any other kind.
+     * @type {MarketplaceCapabilityIn}
+     * @memberof MarketplacePublishReq
+     */
+    'capability'?: MarketplaceCapabilityIn;
     /**
      * Category groups the listing in the shop window.
      * @type {string}
@@ -54,13 +63,13 @@ export interface MarketplacePublishReq {
      */
     'expert'?: MarketplaceExpertIn;
     /**
-     * Kind is what is sold: agent, persona, app, skill, mcp, tool (the default) or expert. A tool is a platform tool, sold per call by the platform alone; an expert is the caller, a person making their time available.
+     * Kind is what is sold: agent, persona, app, skill, mcp, tool (the default), expert or capability. A tool is a platform tool, sold per call by the platform alone; an expert is the caller, a person making their time available; a capability is a trained Kai capability adapter of the org\'s.
      * @type {string}
      * @memberof MarketplacePublishReq
      */
     'kind'?: string;
     /**
-     * Price is the price as a decimal USD string, exact to 18 places — per call for a tool, what a job is offered at otherwise. \"0.0025\" is a quarter of a cent and stays one. Empty or \"0\" publishes it free; a positive price requires Recipient.
+     * Price is the price as a decimal USD string, exact to 18 places — per call for a tool or capability, what a job is offered at otherwise. \"0.0025\" is a quarter of a cent and stays one. Empty or \"0\" publishes it free; a positive price requires Recipient.
      * @type {string}
      * @memberof MarketplacePublishReq
      */
@@ -84,7 +93,7 @@ export interface MarketplacePublishReq {
      */
     'title'?: string;
     /**
-     * Tool names the thing sold, in the seller\'s own org: an agent\'s name or id, an app\'s project slug or id, a skill\'s name or id, an MCP server\'s name or id registered by hand, or a platform tool\'s registry name. It must be the seller\'s — there are no phantom listings. An expert\'s is the caller\'s own IAM identity, and is left out.
+     * Tool names the thing sold, in the seller\'s own org: an agent\'s name or id, an app\'s project slug or id, a skill\'s name or id, a Kai capability\'s name, an MCP server\'s name or id registered by hand, or a platform tool\'s registry name. It must be the seller\'s — there are no phantom listings. An expert\'s is the caller\'s own IAM identity, and is left out.
      * @type {string}
      * @memberof MarketplacePublishReq
      */

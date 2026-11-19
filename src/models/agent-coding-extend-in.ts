@@ -21,6 +21,12 @@
  */
 export interface AgentCodingExtendIn {
     /**
+     * RequestID makes a retry of this request the same request: the time is added once, and the retry answers what the first answered. The Idempotency-Key header is the same value, and wins when both are sent. Optional.
+     * @type {string}
+     * @memberof AgentCodingExtendIn
+     */
+    'requestId'?: string;
+    /**
      * Seconds is how much to add to the time the run is held to. It is added to what the run has left, up to the longest a run may be given, so asking for more than that is answered with what the run got.
      * @type {number}
      * @memberof AgentCodingExtendIn

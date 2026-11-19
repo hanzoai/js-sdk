@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketplaceCapabilitySpec } from './marketplace-capability-spec';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketplaceExpert } from './marketplace-expert';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -32,6 +35,12 @@ import type { MarketplaceSeller } from './marketplace-seller';
  * @interface MarketplaceShopListing
  */
 export interface MarketplaceShopListing {
+    /**
+     * Capability is the Kai capability metadata behind a capability listing — shared representation, route, evaluation metrics and license; absent on any other kind.
+     * @type {MarketplaceCapabilitySpec}
+     * @memberof MarketplaceShopListing
+     */
+    'capability'?: MarketplaceCapabilitySpec;
     /**
      * Category groups it; empty is ungrouped.
      * @type {string}

@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { MarketplaceCapabilitySpec } from './marketplace-capability-spec';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { MarketplaceExpert } from './marketplace-expert';
 
 /**
@@ -23,6 +26,12 @@ import type { MarketplaceExpert } from './marketplace-expert';
  * @interface MarketplaceListing
  */
 export interface MarketplaceListing {
+    /**
+     * Capability is the Kai capability metadata behind a listing of kind capability (capability.go); absent on every other kind.
+     * @type {MarketplaceCapabilitySpec}
+     * @memberof MarketplaceListing
+     */
+    'capability'?: MarketplaceCapabilitySpec;
     /**
      * Category groups the listing in the shop window. Free text — no vocabulary, nothing validates it — and unlike Description it is silently cut to 4096 bytes rather than refused. Empty means ungrouped.
      * @type {string}
@@ -66,7 +75,7 @@ export interface MarketplaceListing {
      */
     'id'?: string;
     /**
-     * Kind is what the listing sells: agent, persona, app, skill, mcp, tool or expert. Listings published before kinds existed sold tools, and read as tool.
+     * Kind is what the listing sells: agent, persona, app, skill, mcp, tool, expert or capability. Listings published before kinds existed sold tools, and read as tool.
      * @type {string}
      * @memberof MarketplaceListing
      */
@@ -96,7 +105,7 @@ export interface MarketplaceListing {
      */
     'recipient'?: string;
     /**
-     * Ref is the id the thing\'s owning app knows it by, resolved when the listing was published — the agent id for an agent named by its name. A tool\'s is the x402 resource a dispatch of it is priced by: the source it resolves from and its name, so a price follows the tool that runs and not a name another org\'s own row may share.
+     * Ref is the id the thing\'s owning app knows it by, resolved when the listing was published — the agent id for an agent named by its name. A tool\'s is the x402 resource a dispatch of it is priced by: the source it resolves from and its name, so a price follows the tool that runs and not a name another org\'s own row may share. A capability\'s is capability:<org>:<sha256>.
      * @type {string}
      * @memberof MarketplaceListing
      */
@@ -108,7 +117,7 @@ export interface MarketplaceListing {
      */
     'title'?: string;
     /**
-     * Tool names the thing sold, as the seller named it: the agent, app, skill or MCP server\'s name or id, or the tool\'s registry name. It was proved the seller\'s own when the listing was published. For a tool it is what install switches on. For an expert it is the person\'s IAM identity.
+     * Tool names the thing sold, as the seller named it: the agent, app, skill, capability or MCP server\'s name or id, or the tool\'s registry name. It was proved the seller\'s own when the listing was published. For a tool or capability it is what install switches on. For an expert it is the person\'s IAM identity.
      * @type {string}
      * @memberof MarketplaceListing
      */

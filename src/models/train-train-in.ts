@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TrainExampleIn } from './train-example-in';
 
 /**
  * 
@@ -26,6 +29,12 @@ export interface TrainTrainIn {
      * @memberof TrainTrainIn
      */
     'corrections'?: Array<string>;
+    /**
+     * Examples, when given, encode additional (state, answer) pairs over Kai\'s shared representation and append any new corrections to the capability.
+     * @type {Array<TrainExampleIn>}
+     * @memberof TrainTrainIn
+     */
+    'examples'?: Array<TrainExampleIn>;
     /**
      * 
      * @type {string}

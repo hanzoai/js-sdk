@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { BillingInvoiceLine } from './billing-invoice-line';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { BillingPriceQuote } from './billing-price-quote';
 
 /**
  * 
@@ -77,6 +80,12 @@ export interface BillingInvoice {
      * @memberof BillingInvoice
      */
     'paymentRef'?: string;
+    /**
+     * Quote is the invoice\'s price in the buyer\'s own currency: the bound quote once paid, else the quote an awaiting-bank attempt is bound to, else the displayed price of what is due. Absent in the plan\'s currency.
+     * @type {BillingPriceQuote}
+     * @memberof BillingInvoice
+     */
+    'quote'?: BillingPriceQuote;
     /**
      * Status is draft, open, paid, void or uncollectible. A draft is not collectible; issuing moves it to open.
      * @type {string}

@@ -33,6 +33,36 @@ export interface BillingCryptoAsset {
      */
     'chain'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof BillingCryptoAsset
+     */
+    'coupon'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingCryptoAsset
+     */
+    'interval'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingCryptoAsset
+     */
+    'level'?: number;
+    /**
+     * Optional plan fields when paying a plan\'s first period with crypto.
+     * @type {string}
+     * @memberof BillingCryptoAsset
+     */
+    'planId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingCryptoAsset
+     */
+    'quantity'?: number;
+    /**
      * Token is the asset on that chain, one of the options\' tokens. Empty takes the rail\'s default.
      * @type {string}
      * @memberof BillingCryptoAsset

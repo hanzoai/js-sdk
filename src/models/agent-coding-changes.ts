@@ -22,6 +22,9 @@ import type { AgentCodingFile } from './agent-coding-file';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { AgentCodingPull } from './agent-coding-pull';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AgentCodingSteered } from './agent-coding-steered';
 
 /**
  * 
@@ -77,5 +80,11 @@ export interface AgentCodingChanges {
      * @memberof AgentCodingChanges
      */
     'repo'?: string;
+    /**
+     * Steers are the instructions said to the run while no pod held it, oldest first, each queued until the run took it and delivered after. An instruction that reached a run directly is not here: its answer was the delivery.
+     * @type {Array<AgentCodingSteered>}
+     * @memberof AgentCodingChanges
+     */
+    'steers'?: Array<AgentCodingSteered>;
 }
 

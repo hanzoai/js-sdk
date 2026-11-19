@@ -81,11 +81,29 @@ export interface AgentAgentView {
      */
     'executionMode'?: string;
     /**
+     * GroupID names the Bot Group (\"grp_...\") this bot belongs to when assigned to a group; empty when unassigned.
+     * @type {string}
+     * @memberof AgentAgentView
+     */
+    'groupId'?: string;
+    /**
      * ID is the agent\'s stable handle, minted here as \"agent_\" + 32 hex characters of crypto/rand. A caller cannot choose it, and it never changes — unlike Name, which is the other way to address the same agent.
      * @type {string}
      * @memberof AgentAgentView
      */
     'id'?: string;
+    /**
+     * IsPrimary is true for the org\'s single Primary Bot (at most one per org, default \"hanzo\") that directs subordinate bots and multi-layer Bot Groups.
+     * @type {boolean}
+     * @memberof AgentAgentView
+     */
+    'isPrimary'?: boolean;
+    /**
+     * Layer is the bot\'s tier in the coordination hierarchy: 0 for the Primary Bot, 1 for top-level group leads, and 2+ for nested worker and consensus bots.
+     * @type {number}
+     * @memberof AgentAgentView
+     */
+    'layer'?: number;
     /**
      * Lineage is every agent above this one, nearest first — the parent, its parent, and so on to the agent a person defined. All of them are in this org, so the principal this agent answers to is theirs.
      * @type {Array<string>}
@@ -99,7 +117,7 @@ export interface AgentAgentView {
      */
     'max_task_micro_usd'?: number;
     /**
-     * Model is the Zen model this agent runs on, and it is always OUR name for it: writes normalize through cloud.ZenModel and the read normalizes again, so an upstream family name never leaves here even from a row written before that rule existed. A create that named none took the deployment\'s configured default, so this is where a caller learns which model it actually got.
+     * Model is the Zen model this agent runs on, and it is always OUR name for it: writes normalize through aimodel.ZenModel and the read normalizes again, so an upstream family name never leaves here even from a row written before that rule existed. A create that named none took the deployment\'s configured default, so this is where a caller learns which model it actually got.
      * @type {string}
      * @memberof AgentAgentView
      */

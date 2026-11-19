@@ -21,7 +21,7 @@
  */
 export interface AgentCodingInstruction {
     /**
-     * RequestID deduplicates retries of the same steer request; optional.
+     * RequestID makes a retry of this instruction the same instruction: said once to the run, whichever pod takes the retry and whatever restarts between. The Idempotency-Key header is the same value, and wins when both are sent. Optional.
      * @type {string}
      * @memberof AgentCodingInstruction
      */

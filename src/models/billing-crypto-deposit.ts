@@ -87,6 +87,12 @@ export interface BillingCryptoDeposit {
      */
     'minimumCents'?: number;
     /**
+     * PlanID and SubscriptionID are set when the deposit pays a plan\'s first period.
+     * @type {string}
+     * @memberof BillingCryptoDeposit
+     */
+    'planId'?: string;
+    /**
      * RequiredConfirmations is how many blocks deep the transfer must be before it is credited.
      * @type {number}
      * @memberof BillingCryptoDeposit
@@ -98,6 +104,12 @@ export interface BillingCryptoDeposit {
      * @memberof BillingCryptoDeposit
      */
     'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingCryptoDeposit
+     */
+    'subscriptionId'?: string;
     /**
      * Token is the asset to send; this intent credits that token alone.
      * @type {string}

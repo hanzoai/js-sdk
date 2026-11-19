@@ -69,11 +69,29 @@ export interface AgentUpdateAgentIn {
      */
     'executionMode'?: string;
     /**
+     * GroupID assigns this bot to a Bot Group (by grp_... id or name), or removes it from its group when set to \"\".
+     * @type {string}
+     * @memberof AgentUpdateAgentIn
+     */
+    'groupId'?: string;
+    /**
      * Instructions replaces the system prompt whole, up to 32 KiB. There is no append: a prompt is one text, and sending \"\" clears it.
      * @type {string}
      * @memberof AgentUpdateAgentIn
      */
     'instructions'?: string;
+    /**
+     * IsPrimary promotes (with true) or demotes (with false) this bot as the org\'s sole Primary Bot; promoting clears isPrimary on every other bot in the org.
+     * @type {boolean}
+     * @memberof AgentUpdateAgentIn
+     */
+    'isPrimary'?: boolean;
+    /**
+     * Layer updates the bot\'s coordination tier (0..8).
+     * @type {number}
+     * @memberof AgentUpdateAgentIn
+     */
+    'layer'?: number;
     /**
      * MaxTaskMicroUSD is the ceiling for a single run, in micro-USD. A session cannot exceed it even when the period cap still has room, so one runaway task cannot consume a month.
      * @type {number}

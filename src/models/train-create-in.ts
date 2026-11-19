@@ -13,6 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TrainExampleIn } from './train-example-in';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TrainQuestion } from './train-question';
 
 /**
  * 
@@ -27,10 +33,28 @@ export interface TrainCreateIn {
      */
     'corrections'?: Array<string>;
     /**
+     * Examples are cold-start (state, answer) pairs encoded once over Kai\'s shared representation and filed as captures and corrections of Question.
+     * @type {Array<TrainExampleIn>}
+     * @memberof TrainCreateIn
+     */
+    'examples'?: Array<TrainExampleIn>;
+    /**
      * Name is its name: lowercase words joined by hyphens, at most 64.
      * @type {string}
      * @memberof TrainCreateIn
      */
     'name'?: string;
+    /**
+     * Question is the route it answers when created cold-start from Examples without prior captured corrections.
+     * @type {TrainQuestion}
+     * @memberof TrainCreateIn
+     */
+    'question'?: TrainQuestion;
+    /**
+     * Train runs a lesson immediately after creating the capability.
+     * @type {boolean}
+     * @memberof TrainCreateIn
+     */
+    'train'?: boolean;
 }
 

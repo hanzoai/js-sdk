@@ -39,6 +39,12 @@ export interface MarketingVisit {
      */
     'consent'?: string;
     /**
+     * EventID is the shared conversion deduplication id minted by the browser tag.
+     * @type {string}
+     * @memberof MarketingVisit
+     */
+    'event_id'?: string;
+    /**
      * Fbc is Meta\'s click cookie, fb.1.<ms>.<fbclid>.
      * @type {string}
      * @memberof MarketingVisit
@@ -69,11 +75,29 @@ export interface MarketingVisit {
      */
     'gclid'?: string;
     /**
+     * LiFatId is the LinkedIn first-party ads click id (li_fat_id) the visitor arrived with.
+     * @type {string}
+     * @memberof MarketingVisit
+     */
+    'li_fat_id'?: string;
+    /**
      * Tags is which of the page\'s ad tags already saw this lead: ga, meta.
      * @type {string}
      * @memberof MarketingVisit
      */
     'tags'?: string;
+    /**
+     * Ttclid is the TikTok click id (ttclid) the visitor arrived with.
+     * @type {string}
+     * @memberof MarketingVisit
+     */
+    'ttclid'?: string;
+    /**
+     * Twclid is the X Ads click id (twclid) the visitor arrived with.
+     * @type {string}
+     * @memberof MarketingVisit
+     */
+    'twclid'?: string;
     /**
      * URL is the page the form was filed from, in full.
      * @type {string}

@@ -26,6 +26,8 @@ import type { GitActivityOut } from '../models';
 // @ts-ignore
 import type { GitBlobJSON } from '../models';
 // @ts-ignore
+import type { GitCombinedStatus } from '../models';
+// @ts-ignore
 import type { GitCommitsJSON } from '../models';
 // @ts-ignore
 import type { GitCreateReq } from '../models';
@@ -33,6 +35,12 @@ import type { GitCreateReq } from '../models';
 import type { GitFilesJSON } from '../models';
 // @ts-ignore
 import type { GitGcOut } from '../models';
+// @ts-ignore
+import type { GitKeyIn } from '../models';
+// @ts-ignore
+import type { GitKeyList } from '../models';
+// @ts-ignore
+import type { GitKeyView } from '../models';
 // @ts-ignore
 import type { GitLinkAll } from '../models';
 // @ts-ignore
@@ -77,6 +85,10 @@ import type { GitRunLogs } from '../models';
 import type { GitRunStart } from '../models';
 // @ts-ignore
 import type { GitRunnerList } from '../models';
+// @ts-ignore
+import type { GitStatusIn } from '../models';
+// @ts-ignore
+import type { GitStatusView } from '../models';
 // @ts-ignore
 import type { GitSubscribeReq } from '../models';
 // @ts-ignore
@@ -123,6 +135,44 @@ import type { RunnerTaskOut } from '../models';
  */
 export const GitApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Removes a key; a push or fetch with it fails from the next connection. Answers 204. The person who registered it or an org admin may remove it; any other caller, and an id that is not this org\'s, is not found.
+         * @summary Removes a key; a push or fetch with it fails from the next connection.
+         * @param {string} id ID is the key\&#39;s identifier, from the :id path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGitKeysById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteGitKeysById', 'id', id)
+            const localVarPath = `/v1/git/keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
@@ -427,6 +477,45 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Reads the keys the caller may see: their own, or every key of the org for an org admin. `repo` narrows to one repository\'s deploy keys.
+         * @summary Reads the keys the caller may see: their own, or every key of the org for an org admin.
+         * @param {string} [repo] Repo narrows to one repository\&#39;s deploy keys.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitKeys: async (repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the capacity this org has declared and how many daemons have entered each pool.
          * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
          * @param {*} [options] Override http request option.
@@ -621,6 +710,48 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads what a commit\'s contexts say, and the one word they say together.
+         * @summary Reads what a commit\'s contexts say, and the one word they say together.
+         * @param {string} name Name is the repository, from the :name path segment.
+         * @param {string} sha SHA is the full commit hash, from the :sha path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitReposByNameCommitsByShaStatuses: async (name: string, sha: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getGitReposByNameCommitsByShaStatuses', 'name', name)
+            // verify required parameter 'sha' is not null or undefined
+            assertParamExists('getGitReposByNameCommitsByShaStatuses', 'sha', sha)
+            const localVarPath = `/v1/git/repos/{name}/commits/{sha}/statuses`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"sha"}}`, encodeURIComponent(String(sha)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1460,6 +1591,46 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository. Answers 201. A key already registered anywhere is a 409, and a repository outside the caller\'s scope is not found. Deploy keys are an admin\'s to register; a user key authenticates its owner into this org only.
+         * @summary Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository.
+         * @param {GitKeyIn} gitKeyIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitKeys: async (gitKeyIn: GitKeyIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gitKeyIn' is not null or undefined
+            assertParamExists('postGitKeys', 'gitKeyIn', gitKeyIn)
+            const localVarPath = `/v1/git/keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitKeyIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
          * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
          * @param {GitLinkAll} gitLinkAll 
@@ -1573,6 +1744,54 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(gitCreateReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * States a commit\'s status. Answers 201. Stating a context that already spoke replaces its word. A repository outside the caller\'s scope is not found.
+         * @summary States a commit\'s status.
+         * @param {string} name Name is the repository, from the :name path segment.
+         * @param {string} sha SHA is the full commit hash the status is about, from the :sha path segment.
+         * @param {GitStatusIn} gitStatusIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameCommitsByShaStatuses: async (name: string, sha: string, gitStatusIn: GitStatusIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postGitReposByNameCommitsByShaStatuses', 'name', name)
+            // verify required parameter 'sha' is not null or undefined
+            assertParamExists('postGitReposByNameCommitsByShaStatuses', 'sha', sha)
+            // verify required parameter 'gitStatusIn' is not null or undefined
+            assertParamExists('postGitReposByNameCommitsByShaStatuses', 'gitStatusIn', gitStatusIn)
+            const localVarPath = `/v1/git/repos/{name}/commits/{sha}/statuses`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"sha"}}`, encodeURIComponent(String(sha)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitStatusIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2268,6 +2487,19 @@ export const GitApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GitApiAxiosParamCreator(configuration)
     return {
         /**
+         * Removes a key; a push or fetch with it fails from the next connection. Answers 204. The person who registered it or an org admin may remove it; any other caller, and an id that is not this org\'s, is not found.
+         * @summary Removes a key; a push or fetch with it fails from the next connection.
+         * @param {string} id ID is the key\&#39;s identifier, from the :id path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteGitKeysById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitKeysById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteGitKeysById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
@@ -2367,6 +2599,19 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads the keys the caller may see: their own, or every key of the org for an org admin. `repo` narrows to one repository\'s deploy keys.
+         * @summary Reads the keys the caller may see: their own, or every key of the org for an org admin.
+         * @param {string} [repo] Repo narrows to one repository\&#39;s deploy keys.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitKeys(repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitKeys(repo, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the capacity this org has declared and how many daemons have entered each pool.
          * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
          * @param {*} [options] Override http request option.
@@ -2432,6 +2677,20 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameCommits(name, ref, path, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameCommits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads what a commit\'s contexts say, and the one word they say together.
+         * @summary Reads what a commit\'s contexts say, and the one word they say together.
+         * @param {string} name Name is the repository, from the :name path segment.
+         * @param {string} sha SHA is the full commit hash, from the :sha path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitReposByNameCommitsByShaStatuses(name: string, sha: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitCombinedStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitReposByNameCommitsByShaStatuses(name, sha, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitReposByNameCommitsByShaStatuses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2704,6 +2963,19 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository. Answers 201. A key already registered anywhere is a 409, and a repository outside the caller\'s scope is not found. Deploy keys are an admin\'s to register; a user key authenticates its owner into this org only.
+         * @summary Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository.
+         * @param {GitKeyIn} gitKeyIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitKeys(gitKeyIn: GitKeyIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitKeyView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitKeys(gitKeyIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
          * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
          * @param {GitLinkAll} gitLinkAll 
@@ -2740,6 +3012,21 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGitRepos(gitCreateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.postGitRepos']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * States a commit\'s status. Answers 201. Stating a context that already spoke replaces its word. A repository outside the caller\'s scope is not found.
+         * @summary States a commit\'s status.
+         * @param {string} name Name is the repository, from the :name path segment.
+         * @param {string} sha SHA is the full commit hash the status is about, from the :sha path segment.
+         * @param {GitStatusIn} gitStatusIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGitReposByNameCommitsByShaStatuses(name: string, sha: string, gitStatusIn: GitStatusIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitStatusView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGitReposByNameCommitsByShaStatuses(name, sha, gitStatusIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postGitReposByNameCommitsByShaStatuses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2973,6 +3260,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = GitApiFp(configuration)
     return {
         /**
+         * Removes a key; a push or fetch with it fails from the next connection. Answers 204. The person who registered it or an org admin may remove it; any other caller, and an id that is not this org\'s, is not found.
+         * @summary Removes a key; a push or fetch with it fails from the next connection.
+         * @param {GitApiDeleteGitKeysByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGitKeysById(requestParameters: GitApiDeleteGitKeysByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteGitKeysById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
          * @summary Removes a repo\'s metadata and purges its storage.
          * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
@@ -3043,6 +3340,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads the keys the caller may see: their own, or every key of the org for an org admin. `repo` narrows to one repository\'s deploy keys.
+         * @summary Reads the keys the caller may see: their own, or every key of the org for an org admin.
+         * @param {GitApiGetGitKeysRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitKeys(requestParameters: GitApiGetGitKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GitKeyList> {
+            return localVarFp.getGitKeys(requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the capacity this org has declared and how many daemons have entered each pool.
          * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
          * @param {*} [options] Override http request option.
@@ -3089,6 +3396,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGitReposByNameCommits(requestParameters: GitApiGetGitReposByNameCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitCommitsJSON> {
             return localVarFp.getGitReposByNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads what a commit\'s contexts say, and the one word they say together.
+         * @summary Reads what a commit\'s contexts say, and the one word they say together.
+         * @param {GitApiGetGitReposByNameCommitsByShaStatusesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitReposByNameCommitsByShaStatuses(requestParameters: GitApiGetGitReposByNameCommitsByShaStatusesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitCombinedStatus> {
+            return localVarFp.getGitReposByNameCommitsByShaStatuses(requestParameters.name, requestParameters.sha, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every file a glob selects at one revision, WITH its bytes and the revision they came from. It is the read a delivery generator makes: one call answers \"what is the inventory at this commit, and what does it say\", where listing and then fetching would be a request per file.  Returning the resolved revision matters as much as the bytes. A generator that lists at `main` and then reads at `main` can straddle a push and assemble half its inventory from one commit and half from the next; resolving once makes the whole read consistent by construction.  A file past the read cap comes back Truncated with no content rather than being dropped. A caller building a desired set has to know the difference between \"this file is empty\" and \"this file was not read\" — silently omitting it is how a pruning reconcile deletes what the missing file declared.
@@ -3279,6 +3596,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postGitByOrgByRepoGitUploadPack(requestParameters.org, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
+         * Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository. Answers 201. A key already registered anywhere is a 409, and a repository outside the caller\'s scope is not found. Deploy keys are an admin\'s to register; a user key authenticates its owner into this org only.
+         * @summary Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository.
+         * @param {GitApiPostGitKeysRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitKeyView> {
+            return localVarFp.postGitKeys(requestParameters.gitKeyIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
          * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
          * @param {GitApiPostGitLinkRequest} requestParameters Request parameters.
@@ -3307,6 +3634,16 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         postGitRepos(requestParameters: GitApiPostGitReposRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitRepoView> {
             return localVarFp.postGitRepos(requestParameters.gitCreateReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * States a commit\'s status. Answers 201. Stating a context that already spoke replaces its word. A repository outside the caller\'s scope is not found.
+         * @summary States a commit\'s status.
+         * @param {GitApiPostGitReposByNameCommitsByShaStatusesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGitReposByNameCommitsByShaStatuses(requestParameters: GitApiPostGitReposByNameCommitsByShaStatusesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GitStatusView> {
+            return localVarFp.postGitReposByNameCommitsByShaStatuses(requestParameters.name, requestParameters.sha, requestParameters.gitStatusIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph. Idempotent, and safe to interrupt — git swaps both artifacts atomically. It runs under one pack slot with the same memory bounds as a clone, so it can block behind heavy pack traffic rather than compete with it. Storage usage is re-measured afterwards, since a repack reclaims space.
@@ -3470,6 +3807,20 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
 };
 
 /**
+ * Request parameters for deleteGitKeysById operation in GitApi.
+ * @export
+ * @interface GitApiDeleteGitKeysByIdRequest
+ */
+export interface GitApiDeleteGitKeysByIdRequest {
+    /**
+     * ID is the key\&#39;s identifier, from the :id path segment.
+     * @type {string}
+     * @memberof GitApiDeleteGitKeysById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for deleteGitReposByName operation in GitApi.
  * @export
  * @interface GitApiDeleteGitReposByNameRequest
@@ -3624,6 +3975,20 @@ export interface GitApiGetGitByOrgByRepoInfoRefsRequest {
 }
 
 /**
+ * Request parameters for getGitKeys operation in GitApi.
+ * @export
+ * @interface GitApiGetGitKeysRequest
+ */
+export interface GitApiGetGitKeysRequest {
+    /**
+     * Repo narrows to one repository\&#39;s deploy keys.
+     * @type {string}
+     * @memberof GitApiGetGitKeys
+     */
+    readonly repo?: string
+}
+
+/**
  * Request parameters for getGitReposByName operation in GitApi.
  * @export
  * @interface GitApiGetGitReposByNameRequest
@@ -3698,6 +4063,27 @@ export interface GitApiGetGitReposByNameCommitsRequest {
      * @memberof GitApiGetGitReposByNameCommits
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for getGitReposByNameCommitsByShaStatuses operation in GitApi.
+ * @export
+ * @interface GitApiGetGitReposByNameCommitsByShaStatusesRequest
+ */
+export interface GitApiGetGitReposByNameCommitsByShaStatusesRequest {
+    /**
+     * Name is the repository, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiGetGitReposByNameCommitsByShaStatuses
+     */
+    readonly name: string
+
+    /**
+     * SHA is the full commit hash, from the :sha path segment.
+     * @type {string}
+     * @memberof GitApiGetGitReposByNameCommitsByShaStatuses
+     */
+    readonly sha: string
 }
 
 /**
@@ -4107,6 +4493,20 @@ export interface GitApiPostGitByOrgByRepoGitUploadPackRequest {
 }
 
 /**
+ * Request parameters for postGitKeys operation in GitApi.
+ * @export
+ * @interface GitApiPostGitKeysRequest
+ */
+export interface GitApiPostGitKeysRequest {
+    /**
+     * 
+     * @type {GitKeyIn}
+     * @memberof GitApiPostGitKeys
+     */
+    readonly gitKeyIn: GitKeyIn
+}
+
+/**
  * Request parameters for postGitLink operation in GitApi.
  * @export
  * @interface GitApiPostGitLinkRequest
@@ -4146,6 +4546,34 @@ export interface GitApiPostGitReposRequest {
      * @memberof GitApiPostGitRepos
      */
     readonly gitCreateReq: GitCreateReq
+}
+
+/**
+ * Request parameters for postGitReposByNameCommitsByShaStatuses operation in GitApi.
+ * @export
+ * @interface GitApiPostGitReposByNameCommitsByShaStatusesRequest
+ */
+export interface GitApiPostGitReposByNameCommitsByShaStatusesRequest {
+    /**
+     * Name is the repository, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiPostGitReposByNameCommitsByShaStatuses
+     */
+    readonly name: string
+
+    /**
+     * SHA is the full commit hash the status is about, from the :sha path segment.
+     * @type {string}
+     * @memberof GitApiPostGitReposByNameCommitsByShaStatuses
+     */
+    readonly sha: string
+
+    /**
+     * 
+     * @type {GitStatusIn}
+     * @memberof GitApiPostGitReposByNameCommitsByShaStatuses
+     */
+    readonly gitStatusIn: GitStatusIn
 }
 
 /**
@@ -4450,6 +4878,18 @@ export interface GitApiPostRunnerTaskRequest {
  */
 export class GitApi extends BaseAPI {
     /**
+     * Removes a key; a push or fetch with it fails from the next connection. Answers 204. The person who registered it or an org admin may remove it; any other caller, and an id that is not this org\'s, is not found.
+     * @summary Removes a key; a push or fetch with it fails from the next connection.
+     * @param {GitApiDeleteGitKeysByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public deleteGitKeysById(requestParameters: GitApiDeleteGitKeysByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteGitKeysById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete. A repository this app does not hold is looked for where getRepo looks next, the org\'s made workspace on the forge, so a customer\'s own repository (or the copy a GitHub link made there) is one a delete can reach, as their list already shows it.
      * @summary Removes a repo\'s metadata and purges its storage.
      * @param {GitApiDeleteGitReposByNameRequest} requestParameters Request parameters.
@@ -4534,6 +4974,18 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * Reads the keys the caller may see: their own, or every key of the org for an org admin. `repo` narrows to one repository\'s deploy keys.
+     * @summary Reads the keys the caller may see: their own, or every key of the org for an org admin.
+     * @param {GitApiGetGitKeysRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitKeys(requestParameters: GitApiGetGitKeysRequest = {}, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitKeys(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the capacity this org has declared and how many daemons have entered each pool.
      * @summary Returns the capacity this org has declared and how many daemons have entered each pool.
      * @param {*} [options] Override http request option.
@@ -4589,6 +5041,18 @@ export class GitApi extends BaseAPI {
      */
     public getGitReposByNameCommits(requestParameters: GitApiGetGitReposByNameCommitsRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitReposByNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads what a commit\'s contexts say, and the one word they say together.
+     * @summary Reads what a commit\'s contexts say, and the one word they say together.
+     * @param {GitApiGetGitReposByNameCommitsByShaStatusesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitReposByNameCommitsByShaStatuses(requestParameters: GitApiGetGitReposByNameCommitsByShaStatusesRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitReposByNameCommitsByShaStatuses(requestParameters.name, requestParameters.sha, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4818,6 +5282,18 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository. Answers 201. A key already registered anywhere is a 409, and a repository outside the caller\'s scope is not found. Deploy keys are an admin\'s to register; a user key authenticates its owner into this org only.
+     * @summary Registers an SSH public key: the caller\'s own, or — with `repo` — a deploy key for one repository.
+     * @param {GitApiPostGitKeysRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitKeys(requestParameters: GitApiPostGitKeysRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitKeys(requestParameters.gitKeyIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it. A repository with no such namesake is listed and left alone, and one holding history here is listed and never touched. Nothing is fetched: a linked repository\'s cache fills on its first read. Org admins only.
      * @summary Links every repository of the caller\'s org that holds no history here and names no link to github.com/<owner>/<name>, where GitHub lets the caller read it.
      * @param {GitApiPostGitLinkRequest} requestParameters Request parameters.
@@ -4851,6 +5327,18 @@ export class GitApi extends BaseAPI {
      */
     public postGitRepos(requestParameters: GitApiPostGitReposRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).postGitRepos(requestParameters.gitCreateReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * States a commit\'s status. Answers 201. Stating a context that already spoke replaces its word. A repository outside the caller\'s scope is not found.
+     * @summary States a commit\'s status.
+     * @param {GitApiPostGitReposByNameCommitsByShaStatusesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postGitReposByNameCommitsByShaStatuses(requestParameters: GitApiPostGitReposByNameCommitsByShaStatusesRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postGitReposByNameCommitsByShaStatuses(requestParameters.name, requestParameters.sha, requestParameters.gitStatusIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -21,6 +21,9 @@ import type { AgentEventView } from './agent-event-view';
 import type { AgentLastEventView } from './agent-last-event-view';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AgentSessionPark } from './agent-session-park';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AgentSessionProgress } from './agent-session-progress';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -93,7 +96,7 @@ export interface AgentSessionDetail {
      */
     'cwd'?: string;
     /**
-     * EndedAt is when it reached done or error, same format. Empty while it is still running or paused, which is how absence reads here: not over yet.
+     * EndedAt is when its run stopped, same format: it reached done, error or stopped, or it paused. Empty while it runs; a resume clears it, since it runs again.
      * @type {string}
      * @memberof AgentSessionDetail
      */
@@ -164,6 +167,12 @@ export interface AgentSessionDetail {
      * @memberof AgentSessionDetail
      */
     'parentSessionId'?: string;
+    /**
+     * Park is present while a coding run waits to go on by itself: the model API refused it for a usage limit, or its payer refused it. The session is paused, holds no sandbox, and its work is on its branch. Absent for every other session.
+     * @type {AgentSessionPark}
+     * @memberof AgentSessionDetail
+     */
+    'park'?: AgentSessionPark;
     /**
      * PR is the address of the pull request the run proposed. Empty until it proposes one, and for a run that changed nothing.
      * @type {string}

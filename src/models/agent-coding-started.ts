@@ -27,6 +27,30 @@ export interface AgentCodingStarted {
      */
     'branch'?: string;
     /**
+     * Carried is how many of the instructions queued on the run `after` names went into this run\'s task. Zero for a run that follows nothing, or one with nothing queued.
+     * @type {number}
+     * @memberof AgentCodingStarted
+     */
+    'carried'?: number;
+    /**
+     * Dropped is how many of them fit no task at all (more than the prompt limit) and were set aside, not left queued.
+     * @type {number}
+     * @memberof AgentCodingStarted
+     */
+    'dropped'?: number;
+    /**
+     * Left is how many of them did not fit this run\'s task and are still queued on the run it follows.
+     * @type {number}
+     * @memberof AgentCodingStarted
+     */
+    'left'?: number;
+    /**
+     * Note says what became of the queue in words, when there was one.
+     * @type {string}
+     * @memberof AgentCodingStarted
+     */
+    'note'?: string;
+    /**
      * Pull is the CLI command or instruction to pull this run locally, e.g. `hanzo pull <sessionId>`.
      * @type {string}
      * @memberof AgentCodingStarted

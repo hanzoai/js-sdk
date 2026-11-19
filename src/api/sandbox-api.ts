@@ -26,6 +26,10 @@ import type { ProblemDetails } from '../models';
 // @ts-ignore
 import type { SandboxBlob } from '../models';
 // @ts-ignore
+import type { SandboxComputerIn } from '../models';
+// @ts-ignore
+import type { SandboxComputerOut } from '../models';
+// @ts-ignore
 import type { SandboxEndIn } from '../models';
 // @ts-ignore
 import type { SandboxExecRequest } from '../models';
@@ -71,6 +75,46 @@ import type { SandboxWrote } from '../models';
  */
 export const SandboxApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Performs one GUI or shell action inside a sandbox the caller holds: screenshot, click, move, drag, scroll, type, key, navigate, wait or shell. Coordinates in click, move, drag and scroll are pixel coordinates of the screenshot.
+         * @summary Use a desktop sandbox\'s screen, mouse, keyboard and browser
+         * @param {SandboxComputerIn} sandboxComputerIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computerInSandbox: async (sandboxComputerIn: SandboxComputerIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxComputerIn' is not null or undefined
+            assertParamExists('computerInSandbox', 'sandboxComputerIn', sandboxComputerIn)
+            const localVarPath = `/v1/sandbox/computer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxComputerIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Ends a sandbox and releases the compute behind it. Answers 204.  ENDING IS NOT STOPPING. This releases the resource: the pod goes and anything only inside it goes with it. To end what a sandbox is RUNNING while keeping the sandbox — the checkout, the logs, the half-written file — the verb is POST /v1/sandbox/stop.  `?purge=1` additionally removes the record, so the sandbox stops being listed at all rather than being listed as ended.
          * @summary Ends a sandbox and releases the compute behind it.
@@ -1065,6 +1109,19 @@ export const SandboxApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SandboxApiAxiosParamCreator(configuration)
     return {
         /**
+         * Performs one GUI or shell action inside a sandbox the caller holds: screenshot, click, move, drag, scroll, type, key, navigate, wait or shell. Coordinates in click, move, drag and scroll are pixel coordinates of the screenshot.
+         * @summary Use a desktop sandbox\'s screen, mouse, keyboard and browser
+         * @param {SandboxComputerIn} sandboxComputerIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async computerInSandbox(sandboxComputerIn: SandboxComputerIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxComputerOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.computerInSandbox(sandboxComputerIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxApi.computerInSandbox']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Ends a sandbox and releases the compute behind it. Answers 204.  ENDING IS NOT STOPPING. This releases the resource: the pod goes and anything only inside it goes with it. To end what a sandbox is RUNNING while keeping the sandbox — the checkout, the logs, the half-written file — the verb is POST /v1/sandbox/stop.  `?purge=1` additionally removes the record, so the sandbox stops being listed at all rather than being listed as ended.
          * @summary Ends a sandbox and releases the compute behind it.
          * @param {string} id ID is the sandbox to end, from the path.
@@ -1403,6 +1460,16 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = SandboxApiFp(configuration)
     return {
         /**
+         * Performs one GUI or shell action inside a sandbox the caller holds: screenshot, click, move, drag, scroll, type, key, navigate, wait or shell. Coordinates in click, move, drag and scroll are pixel coordinates of the screenshot.
+         * @summary Use a desktop sandbox\'s screen, mouse, keyboard and browser
+         * @param {SandboxApiComputerInSandboxRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        computerInSandbox(requestParameters: SandboxApiComputerInSandboxRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxComputerOut> {
+            return localVarFp.computerInSandbox(requestParameters.sandboxComputerIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Ends a sandbox and releases the compute behind it. Answers 204.  ENDING IS NOT STOPPING. This releases the resource: the pod goes and anything only inside it goes with it. To end what a sandbox is RUNNING while keeping the sandbox — the checkout, the logs, the half-written file — the verb is POST /v1/sandbox/stop.  `?purge=1` additionally removes the record, so the sandbox stops being listed at all rather than being listed as ended.
          * @summary Ends a sandbox and releases the compute behind it.
          * @param {SandboxApiDeleteSandboxByIdRequest} requestParameters Request parameters.
@@ -1653,6 +1720,20 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for computerInSandbox operation in SandboxApi.
+ * @export
+ * @interface SandboxApiComputerInSandboxRequest
+ */
+export interface SandboxApiComputerInSandboxRequest {
+    /**
+     * 
+     * @type {SandboxComputerIn}
+     * @memberof SandboxApiComputerInSandbox
+     */
+    readonly sandboxComputerIn: SandboxComputerIn
+}
 
 /**
  * Request parameters for deleteSandboxById operation in SandboxApi.
@@ -2025,6 +2106,18 @@ export interface SandboxApiWriteSandboxFileRequest {
  * @extends {BaseAPI}
  */
 export class SandboxApi extends BaseAPI {
+    /**
+     * Performs one GUI or shell action inside a sandbox the caller holds: screenshot, click, move, drag, scroll, type, key, navigate, wait or shell. Coordinates in click, move, drag and scroll are pixel coordinates of the screenshot.
+     * @summary Use a desktop sandbox\'s screen, mouse, keyboard and browser
+     * @param {SandboxApiComputerInSandboxRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxApi
+     */
+    public computerInSandbox(requestParameters: SandboxApiComputerInSandboxRequest, options?: RawAxiosRequestConfig) {
+        return SandboxApiFp(this.configuration).computerInSandbox(requestParameters.sandboxComputerIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Ends a sandbox and releases the compute behind it. Answers 204.  ENDING IS NOT STOPPING. This releases the resource: the pod goes and anything only inside it goes with it. To end what a sandbox is RUNNING while keeping the sandbox — the checkout, the logs, the half-written file — the verb is POST /v1/sandbox/stop.  `?purge=1` additionally removes the record, so the sandbox stops being listed at all rather than being listed as ended.
      * @summary Ends a sandbox and releases the compute behind it.

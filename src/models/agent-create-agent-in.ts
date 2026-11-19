@@ -69,11 +69,29 @@ export interface AgentCreateAgentIn {
      */
     'executionMode'?: string;
     /**
+     * GroupID optionally assigns this bot to an existing Bot Group (by grp_... id or group name) at creation time.
+     * @type {string}
+     * @memberof AgentCreateAgentIn
+     */
+    'groupId'?: string;
+    /**
      * Instructions is the system prompt, up to 32 KiB, stored verbatim. This is what the model reads; Description is what other CALLERS read.
      * @type {string}
      * @memberof AgentCreateAgentIn
      */
     'instructions'?: string;
+    /**
+     * IsPrimary promotes this newly created bot to the org\'s sole Primary Bot (Layer 0), atomically clearing isPrimary on any previous Primary Bot in the org.
+     * @type {boolean}
+     * @memberof AgentCreateAgentIn
+     */
+    'isPrimary'?: boolean;
+    /**
+     * Layer sets the bot\'s coordination tier (0 for Primary Bot, 1+ for subordinate layers).
+     * @type {number}
+     * @memberof AgentCreateAgentIn
+     */
+    'layer'?: number;
     /**
      * MaxTaskMicroUSD is the ceiling for a single run, in micro-USD. A session cannot exceed it even when the period cap still has room, so one runaway task cannot consume a month.
      * @type {number}

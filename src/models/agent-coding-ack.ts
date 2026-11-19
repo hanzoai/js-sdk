@@ -26,5 +26,11 @@ export interface AgentCodingAck {
      * @memberof AgentCodingAck
      */
     'ok'?: boolean;
+    /**
+     * Queued says the instruction was kept and the run has not taken it yet: it is in the run\'s inbox, and is delivered when the run\'s owner reads it. Absent, the run has it.
+     * @type {boolean}
+     * @memberof AgentCodingAck
+     */
+    'queued'?: boolean;
 }
 

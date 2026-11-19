@@ -38,5 +38,11 @@ export interface AgentCodingPulled {
      * @memberof AgentCodingPulled
      */
     'url'?: string;
+    /**
+     * Warning says what was asked and not done: the pull request is open, but an assignee or reviewer GitHub refused (not a collaborator, say) was not added.
+     * @type {string}
+     * @memberof AgentCodingPulled
+     */
+    'warning'?: string;
 }
 

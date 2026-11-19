@@ -39,6 +39,12 @@ export interface SandboxLeased {
      */
     'cluster'?: string;
     /**
+     * EndsAt is when the sandbox is ended whatever it is doing and however it is paid, Unix seconds: the longest a sandbox may live (a day by default), counted from when it was created and not from this lease, so a resumed sandbox has less than a fresh one. A caller that works in it past this loses the work in it. Absent for a sandbox with no such ceiling (a desktop).
+     * @type {number}
+     * @memberof SandboxLeased
+     */
+    'endsAt'?: number;
+    /**
      * ExpiresAt is when the lease ends, Unix seconds. A resumed sandbox keeps the expiry it had, so this is not always a fresh lease\'s.
      * @type {number}
      * @memberof SandboxLeased

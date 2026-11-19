@@ -32,6 +32,8 @@ import type { TrainCapabilitiesOut } from '../models';
 // @ts-ignore
 import type { TrainCapability } from '../models';
 // @ts-ignore
+import type { TrainCapabilityWeights } from '../models';
+// @ts-ignore
 import type { TrainCapture } from '../models';
 // @ts-ignore
 import type { TrainCaptureIn } from '../models';
@@ -169,8 +171,8 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
-         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind. When Train is true, it immediately runs a CPU lesson and returns the evaluated or publishable capability. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind.
          * @param {TrainCreateIn} trainCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -479,7 +481,7 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. When Examples are provided, they are encoded once over Kai\'s shared representation and any new mistakes are added to its corrections before the lesson runs. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
          * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
          * @param {string} name 
          * @param {TrainTrainIn} trainTrainIn 
@@ -516,6 +518,44 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(trainTrainIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @summary Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesWeights: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('capabilitiesWeights', 'name', name)
+            const localVarPath = `/v1/capabilities/{name}/weights`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1524,8 +1564,8 @@ export const TrainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
-         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind. When Train is true, it immediately runs a CPU lesson and returns the evaluated or publishable capability. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind.
          * @param {TrainCreateIn} trainCreateIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1628,7 +1668,7 @@ export const TrainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. When Examples are provided, they are encoded once over Kai\'s shared representation and any new mistakes are added to its corrections before the lesson runs. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
          * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
          * @param {string} name 
          * @param {TrainTrainIn} trainTrainIn 
@@ -1639,6 +1679,19 @@ export const TrainApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesTrain(name, trainTrainIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesTrain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @summary Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async capabilitiesWeights(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainCapabilityWeights>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.capabilitiesWeights(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrainApi.capabilitiesWeights']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1990,8 +2043,8 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.capabilitiesCorrections(requestParameters.question, options).then((request) => request(axios, basePath));
         },
         /**
-         * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
-         * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+         * Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind. When Train is true, it immediately runs a CPU lesson and returns the evaluated or publishable capability. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+         * @summary Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind.
          * @param {TrainApiCapabilitiesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2069,7 +2122,7 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.capabilitiesSetCapture(requestParameters.trainCaptureIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+         * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. When Examples are provided, they are encoded once over Kai\'s shared representation and any new mistakes are added to its corrections before the lesson runs. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
          * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
          * @param {TrainApiCapabilitiesTrainRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2077,6 +2130,16 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
          */
         capabilitiesTrain(requestParameters: TrainApiCapabilitiesTrainRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapability> {
             return localVarFp.capabilitiesTrain(requestParameters.name, requestParameters.trainTrainIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @summary Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+         * @param {TrainApiCapabilitiesWeightsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        capabilitiesWeights(requestParameters: TrainApiCapabilitiesWeightsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrainCapabilityWeights> {
+            return localVarFp.capabilitiesWeights(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes one of the org\'s objects — an upload or a job\'s output — from the store: every artifact naming it then reads deleted, and its storage is no longer billed. A published object is 409 published, and one a job that has not ended reads or produced is 409 in_use. Another org\'s sha256 is not found, exactly as an unknown one is.
@@ -2456,6 +2519,20 @@ export interface TrainApiCapabilitiesTrainRequest {
      * @memberof TrainApiCapabilitiesTrain
      */
     readonly trainTrainIn: TrainTrainIn
+}
+
+/**
+ * Request parameters for capabilitiesWeights operation in TrainApi.
+ * @export
+ * @interface TrainApiCapabilitiesWeightsRequest
+ */
+export interface TrainApiCapabilitiesWeightsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrainApiCapabilitiesWeights
+     */
+    readonly name: string
 }
 
 /**
@@ -2853,8 +2930,8 @@ export class TrainApi extends BaseAPI {
     }
 
     /**
-     * Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
-     * @summary Makes a capability in draft from captured corrections of one question: that question (its key, type and labels) is the route it will be installed behind.
+     * Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind. When Train is true, it immediately runs a CPU lesson and returns the evaluated or publishable capability. Refused: a name taken by another capability or by a published job\'s output (409 name_taken), corrections of two questions or not captured (400), and a question another of the org\'s capabilities answers (409 route_conflict).
+     * @summary Makes a capability in draft from captured corrections of one question — or cold-start from labeled (state, answer) examples of Question, encoded once over Kai\'s shared representation — which becomes the route it will be installed behind.
      * @param {TrainApiCapabilitiesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2948,7 +3025,7 @@ export class TrainApi extends BaseAPI {
     }
 
     /**
-     * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
+     * Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again. When Examples are provided, they are encoded once over Kai\'s shared representation and any new mistakes are added to its corrections before the lesson runs. The smallest correction that passes evaluation is kept (calibration, then a head, then a boost and veto pair); its evaluation, held out against base Kai, says what it repaired and damaged, how often it fires, that every other answer is base Kai\'s bit for bit, and what it costs. A version that passed is publishable; one that did not is evaluated, with the gate\'s reasons. An installed capability keeps serving its installed version until a new one is published.
      * @summary Teaches a capability a new version from its corrections, on the CPU over the states its org\'s decisions captured: no row is encoded again.
      * @param {TrainApiCapabilitiesTrainRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2957,6 +3034,18 @@ export class TrainApi extends BaseAPI {
      */
     public capabilitiesTrain(requestParameters: TrainApiCapabilitiesTrainRequest, options?: RawAxiosRequestConfig) {
         return TrainApiFp(this.configuration).capabilitiesTrain(requestParameters.name, requestParameters.trainTrainIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+     * @summary Answers a capability\'s .tar weights (base64) and shared representation metadata for its installed or newest passing version, so the org can export or open-source its trained adapter.
+     * @param {TrainApiCapabilitiesWeightsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrainApi
+     */
+    public capabilitiesWeights(requestParameters: TrainApiCapabilitiesWeightsRequest, options?: RawAxiosRequestConfig) {
+        return TrainApiFp(this.configuration).capabilitiesWeights(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

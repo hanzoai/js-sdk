@@ -33,6 +33,12 @@ export interface MarketingAudience {
      */
     'event'?: string;
     /**
+     * ExcludeEvent is an optional analytics event that disqualifies a member who also fired it within windowDays — e.g. event \"checkout_started\" with excludeEvent \"order_completed\" selects abandoned checkouts. Ignored when Event is empty.
+     * @type {string}
+     * @memberof MarketingAudience
+     */
+    'excludeEvent'?: string;
+    /**
      * ID is the server-assigned audience id (\"aud_\" + 128 random bits).
      * @type {string}
      * @memberof MarketingAudience

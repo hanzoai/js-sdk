@@ -36,6 +36,12 @@ export interface AgentCodingStartIn {
      */
     'agentRef'?: string;
     /**
+     * Assignees are the GitHub logins the pull request Pull asks for is assigned to. GitHub repositories only; a forge repository ignores them.
+     * @type {Array<string>}
+     * @memberof AgentCodingStartIn
+     */
+    'assignees'?: Array<string>;
+    /**
      * Base is the branch to start from. Empty takes the repository\'s default. The run never writes here — it writes the agent branch it answers with.
      * @type {string}
      * @memberof AgentCodingStartIn
@@ -65,6 +71,12 @@ export interface AgentCodingStartIn {
      * @memberof AgentCodingStartIn
      */
     'developerInstructions'?: string;
+    /**
+     * Draft opens the pull request Pull asks for as a draft.
+     * @type {boolean}
+     * @memberof AgentCodingStartIn
+     */
+    'draft'?: boolean;
     /**
      * Effort is how hard that model reasons: low, medium or high. Empty takes the model\'s own default. Taken by the dev and codex harnesses, like Model.
      * @type {string}
@@ -126,11 +138,17 @@ export interface AgentCodingStartIn {
      */
     'repo'?: string;
     /**
-     * RequestID deduplicates retries of the same start request for this caller; optional.
+     * RequestID makes a retry of this request the same request: one run for this caller whichever pod takes the retry and whatever restarts between, and the retry answers what the first answered. The Idempotency-Key header is the same value, and wins when both are sent. Optional.
      * @type {string}
      * @memberof AgentCodingStartIn
      */
     'requestId'?: string;
+    /**
+     * Reviewers are the GitHub logins asked to review the pull request Pull asks for. GitHub repositories only; a forge repository ignores them.
+     * @type {Array<string>}
+     * @memberof AgentCodingStartIn
+     */
+    'reviewers'?: Array<string>;
     /**
      * TargetID routes the run to a registered machine the org has claimed instead of to a sandbox in our cluster. Empty runs it here, which is the usual case.
      * @type {string}
@@ -144,7 +162,7 @@ export interface AgentCodingStartIn {
      */
     'task'?: string;
     /**
-     * TimeoutSeconds bounds the whole run. Unset takes the default budget; a run that hits the bound is stopped and reports what it had done by then.
+     * TimeoutSeconds bounds the whole run. Unset takes the longest a run may take, which is the longest a session may live (a day by default); a longer value is that long. A run that hits the bound is stopped and reports what it had done by then. A dev run\'s model credential is renewed for as long as it lasts; a claude or codex run reads its credential once, so it ends a little short of the four hours that credential is good for, saying so, with its work kept on its branch.
      * @type {number}
      * @memberof AgentCodingStartIn
      */

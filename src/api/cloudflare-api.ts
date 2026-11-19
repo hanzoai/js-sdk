@@ -22,6 +22,14 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudflareAISearchInstanceCreate } from '../models';
+// @ts-ignore
+import type { CloudflareAISearchInstanceUpdate } from '../models';
+// @ts-ignore
+import type { CloudflareAISearchNamespace } from '../models';
+// @ts-ignore
+import type { CloudflareAiSearchNamespaceCreateIn } from '../models';
+// @ts-ignore
 import type { CloudflareBucketCreateIn } from '../models';
 // @ts-ignore
 import type { CloudflareD1Query } from '../models';
@@ -38,6 +46,8 @@ import type { CloudflarePurgeIn } from '../models';
 // @ts-ignore
 import type { CloudflareRouteCreateIn } from '../models';
 // @ts-ignore
+import type { CloudflareSpendLimitsOut } from '../models';
+// @ts-ignore
 import type { CloudflareSubdomainSetIn } from '../models';
 // @ts-ignore
 import type { CloudflareWorkerScriptPut } from '../models';
@@ -51,6 +61,44 @@ import type { ProblemDetails } from '../models';
  */
 export const CloudflareApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Deletes an AI Search instance from the org\'s own namespace, and its index with it. Requires org admin.
+         * @summary Deletes an AI Search instance from the org\'s own namespace, and its index with it.
+         * @param {string} instance Instance is the AI Search instance id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCloudflareAiSearchInstancesByInstance: async (instance: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'instance' is not null or undefined
+            assertParamExists('deleteCloudflareAiSearchInstancesByInstance', 'instance', instance)
+            const localVarPath = `/v1/cloudflare/ai-search/instances/{instance}`
+                .replace(`{${"instance"}}`, encodeURIComponent(String(instance)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Deletes a D1 database and everything stored in it. Requires org admin.
          * @summary Deletes a D1 database and everything stored in it.
@@ -368,6 +416,122 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Lists the AI Search instances in the org\'s own namespace on its Cloudflare account. Instances in any other namespace, `default` included, are not this org\'s and are never listed. Any org member may read.
+         * @summary Lists the AI Search instances in the org\'s own namespace on its Cloudflare account.
+         * @param {string} [page] Page is the 1-based page of instances to return.
+         * @param {string} [perPage] PerPage is how many instances one page holds.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchInstances: async (page?: string, perPage?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/cloudflare/ai-search/instances`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (perPage !== undefined) {
+                localVarQueryParameter['per_page'] = perPage;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one AI Search instance from the org\'s own namespace. An instance in any other namespace is not found. Any org member may read.
+         * @summary Reads one AI Search instance from the org\'s own namespace.
+         * @param {string} instance Instance is the AI Search instance id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchInstancesByInstance: async (instance: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'instance' is not null or undefined
+            assertParamExists('getCloudflareAiSearchInstancesByInstance', 'instance', instance)
+            const localVarPath = `/v1/cloudflare/ai-search/instances/{instance}`
+                .replace(`{${"instance"}}`, encodeURIComponent(String(instance)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers which Cloudflare AI Search namespace the caller\'s org owns. The name is derived from the org, so it is answered without contacting Cloudflare and without a connected token; it is the same on every call and differs for every other org. Any org member may read.
+         * @summary Answers which Cloudflare AI Search namespace the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchNamespace: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/cloudflare/ai-search/namespace`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the D1 databases on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the D1 databases on the org\'s Cloudflare account.
          * @param {string} [page] Page is the 1-based page of databases to return.
@@ -644,6 +808,40 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).  A hard limit (one that stops the product) at or past the threshold is also raised on the platform\'s alert path when it is read, so a read is the warning BEFORE Cloudflare stops the layer, not after. Needs a token that can read the account\'s billing; without it Cloudflare\'s own 403 is relayed. Any org member may read.
+         * @summary Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareSpendLimits: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/cloudflare/spend-limits`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the Worker scripts on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the Worker scripts on the org\'s Cloudflare account.
          * @param {*} [options] Override http request option.
@@ -898,6 +1096,86 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it. The namespace is derived from the org and is not a parameter: a body naming another namespace, `default` included, is refused with 400 before anything reaches Cloudflare. Every other field is forwarded as written. Create the namespace first (POST /v1/cloudflare/ai-search/namespace). Requires org admin.
+         * @summary Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it.
+         * @param {CloudflareAISearchInstanceCreate} cloudflareAISearchInstanceCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCloudflareAiSearchInstances: async (cloudflareAISearchInstanceCreate: CloudflareAISearchInstanceCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflareAISearchInstanceCreate' is not null or undefined
+            assertParamExists('postCloudflareAiSearchInstances', 'cloudflareAISearchInstanceCreate', cloudflareAISearchInstanceCreate)
+            const localVarPath = `/v1/cloudflare/ai-search/instances`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareAISearchInstanceCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates the org\'s AI Search namespace on its Cloudflare account. The name is derived from the org, never chosen; a `name` other than that one is refused with 400. Create it once, before the first instance. Requires org admin.
+         * @summary Creates the org\'s AI Search namespace on its Cloudflare account.
+         * @param {CloudflareAiSearchNamespaceCreateIn} cloudflareAiSearchNamespaceCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCloudflareAiSearchNamespace: async (cloudflareAiSearchNamespaceCreateIn: CloudflareAiSearchNamespaceCreateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudflareAiSearchNamespaceCreateIn' is not null or undefined
+            assertParamExists('postCloudflareAiSearchNamespace', 'cloudflareAiSearchNamespaceCreateIn', cloudflareAiSearchNamespaceCreateIn)
+            const localVarPath = `/v1/cloudflare/ai-search/namespace`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareAiSearchNamespaceCreateIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1327,6 +1605,50 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it. Every field is forwarded as written except the namespace: a `namespace` other than the org\'s own, or any `new_namespace`, is refused with 400, because moving an instance discards its index. A namespace change is a replacement — new instance, dual-write, backfill, cutover — never an update. Requires org admin.
+         * @summary Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it.
+         * @param {string} instance 
+         * @param {CloudflareAISearchInstanceUpdate} cloudflareAISearchInstanceUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCloudflareAiSearchInstancesByInstance: async (instance: string, cloudflareAISearchInstanceUpdate: CloudflareAISearchInstanceUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'instance' is not null or undefined
+            assertParamExists('putCloudflareAiSearchInstancesByInstance', 'instance', instance)
+            // verify required parameter 'cloudflareAISearchInstanceUpdate' is not null or undefined
+            assertParamExists('putCloudflareAiSearchInstancesByInstance', 'cloudflareAISearchInstanceUpdate', cloudflareAISearchInstanceUpdate)
+            const localVarPath = `/v1/cloudflare/ai-search/instances/{instance}`
+                .replace(`{${"instance"}}`, encodeURIComponent(String(instance)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudflareAISearchInstanceUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
          * @summary Write a Workers KV value from the request body
          * @param {string} namespace 
@@ -1422,6 +1744,19 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
 export const CloudflareApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CloudflareApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Deletes an AI Search instance from the org\'s own namespace, and its index with it. Requires org admin.
+         * @summary Deletes an AI Search instance from the org\'s own namespace, and its index with it.
+         * @param {string} instance Instance is the AI Search instance id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCloudflareAiSearchInstancesByInstance(instance: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCloudflareAiSearchInstancesByInstance(instance, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.deleteCloudflareAiSearchInstancesByInstance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Deletes a D1 database and everything stored in it. Requires org admin.
          * @summary Deletes a D1 database and everything stored in it.
@@ -1530,6 +1865,45 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the AI Search instances in the org\'s own namespace on its Cloudflare account. Instances in any other namespace, `default` included, are not this org\'s and are never listed. Any org member may read.
+         * @summary Lists the AI Search instances in the org\'s own namespace on its Cloudflare account.
+         * @param {string} [page] Page is the 1-based page of instances to return.
+         * @param {string} [perPage] PerPage is how many instances one page holds.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCloudflareAiSearchInstances(page?: string, perPage?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudflareAiSearchInstances(page, perPage, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.getCloudflareAiSearchInstances']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one AI Search instance from the org\'s own namespace. An instance in any other namespace is not found. Any org member may read.
+         * @summary Reads one AI Search instance from the org\'s own namespace.
+         * @param {string} instance Instance is the AI Search instance id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCloudflareAiSearchInstancesByInstance(instance: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudflareAiSearchInstancesByInstance(instance, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.getCloudflareAiSearchInstancesByInstance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers which Cloudflare AI Search namespace the caller\'s org owns. The name is derived from the org, so it is answered without contacting Cloudflare and without a connected token; it is the same on every call and differs for every other org. Any org member may read.
+         * @summary Answers which Cloudflare AI Search namespace the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCloudflareAiSearchNamespace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudflareAISearchNamespace>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudflareAiSearchNamespace(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.getCloudflareAiSearchNamespace']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the D1 databases on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the D1 databases on the org\'s Cloudflare account.
          * @param {string} [page] Page is the 1-based page of databases to return.
@@ -1617,6 +1991,18 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).  A hard limit (one that stops the product) at or past the threshold is also raised on the platform\'s alert path when it is read, so a read is the warning BEFORE Cloudflare stops the layer, not after. Needs a token that can read the account\'s billing; without it Cloudflare\'s own 403 is relayed. Any org member may read.
+         * @summary Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCloudflareSpendLimits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudflareSpendLimitsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudflareSpendLimits(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.getCloudflareSpendLimits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the Worker scripts on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the Worker scripts on the org\'s Cloudflare account.
          * @param {*} [options] Override http request option.
@@ -1698,6 +2084,32 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudflareZonesByZoneAnalytics(zone, since, until, continuous, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.getCloudflareZonesByZoneAnalytics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it. The namespace is derived from the org and is not a parameter: a body naming another namespace, `default` included, is refused with 400 before anything reaches Cloudflare. Every other field is forwarded as written. Create the namespace first (POST /v1/cloudflare/ai-search/namespace). Requires org admin.
+         * @summary Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it.
+         * @param {CloudflareAISearchInstanceCreate} cloudflareAISearchInstanceCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCloudflareAiSearchInstances(cloudflareAISearchInstanceCreate: CloudflareAISearchInstanceCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareAiSearchInstances(cloudflareAISearchInstanceCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareAiSearchInstances']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates the org\'s AI Search namespace on its Cloudflare account. The name is derived from the org, never chosen; a `name` other than that one is refused with 400. Create it once, before the first instance. Requires org admin.
+         * @summary Creates the org\'s AI Search namespace on its Cloudflare account.
+         * @param {CloudflareAiSearchNamespaceCreateIn} cloudflareAiSearchNamespaceCreateIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCloudflareAiSearchNamespace(cloudflareAiSearchNamespaceCreateIn: CloudflareAiSearchNamespaceCreateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareAiSearchNamespace(cloudflareAiSearchNamespaceCreateIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareAiSearchNamespace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1837,6 +2249,20 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it. Every field is forwarded as written except the namespace: a `namespace` other than the org\'s own, or any `new_namespace`, is refused with 400, because moving an instance discards its index. A namespace change is a replacement — new instance, dual-write, backfill, cutover — never an update. Requires org admin.
+         * @summary Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it.
+         * @param {string} instance 
+         * @param {CloudflareAISearchInstanceUpdate} cloudflareAISearchInstanceUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putCloudflareAiSearchInstancesByInstance(instance: string, cloudflareAISearchInstanceUpdate: CloudflareAISearchInstanceUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCloudflareAiSearchInstancesByInstance(instance, cloudflareAISearchInstanceUpdate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.putCloudflareAiSearchInstancesByInstance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
          * @summary Write a Workers KV value from the request body
          * @param {string} namespace 
@@ -1874,6 +2300,16 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
 export const CloudflareApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CloudflareApiFp(configuration)
     return {
+        /**
+         * Deletes an AI Search instance from the org\'s own namespace, and its index with it. Requires org admin.
+         * @summary Deletes an AI Search instance from the org\'s own namespace, and its index with it.
+         * @param {CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.deleteCloudflareAiSearchInstancesByInstance(requestParameters.instance, options).then((request) => request(axios, basePath));
+        },
         /**
          * Deletes a D1 database and everything stored in it. Requires org admin.
          * @summary Deletes a D1 database and everything stored in it.
@@ -1955,6 +2391,35 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.deleteCloudflareWorkersZonesByZoneRoutesByRoute(requestParameters.zone, requestParameters.route, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists the AI Search instances in the org\'s own namespace on its Cloudflare account. Instances in any other namespace, `default` included, are not this org\'s and are never listed. Any org member may read.
+         * @summary Lists the AI Search instances in the org\'s own namespace on its Cloudflare account.
+         * @param {CloudflareApiGetCloudflareAiSearchInstancesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchInstances(requestParameters: CloudflareApiGetCloudflareAiSearchInstancesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getCloudflareAiSearchInstances(requestParameters.page, requestParameters.perPage, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one AI Search instance from the org\'s own namespace. An instance in any other namespace is not found. Any org member may read.
+         * @summary Reads one AI Search instance from the org\'s own namespace.
+         * @param {CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getCloudflareAiSearchInstancesByInstance(requestParameters.instance, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers which Cloudflare AI Search namespace the caller\'s org owns. The name is derived from the org, so it is answered without contacting Cloudflare and without a connected token; it is the same on every call and differs for every other org. Any org member may read.
+         * @summary Answers which Cloudflare AI Search namespace the caller\'s org owns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareAiSearchNamespace(options?: RawAxiosRequestConfig): AxiosPromise<CloudflareAISearchNamespace> {
+            return localVarFp.getCloudflareAiSearchNamespace(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the D1 databases on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the D1 databases on the org\'s Cloudflare account.
          * @param {CloudflareApiGetCloudflareD1DatabasesRequest} requestParameters Request parameters.
@@ -2014,6 +2479,15 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.getCloudflareR2Buckets(requestParameters.perPage, requestParameters.cursor, requestParameters.nameContains, requestParameters.order, requestParameters.direction, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).  A hard limit (one that stops the product) at or past the threshold is also raised on the platform\'s alert path when it is read, so a read is the warning BEFORE Cloudflare stops the layer, not after. Needs a token that can read the account\'s billing; without it Cloudflare\'s own 403 is relayed. Any org member may read.
+         * @summary Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudflareSpendLimits(options?: RawAxiosRequestConfig): AxiosPromise<CloudflareSpendLimitsOut> {
+            return localVarFp.getCloudflareSpendLimits(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the Worker scripts on the org\'s Cloudflare account. Any org member may read.
          * @summary Lists the Worker scripts on the org\'s Cloudflare account.
          * @param {*} [options] Override http request option.
@@ -2070,6 +2544,26 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          */
         getCloudflareZonesByZoneAnalytics(requestParameters: CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getCloudflareZonesByZoneAnalytics(requestParameters.zone, requestParameters.since, requestParameters.until, requestParameters.continuous, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it. The namespace is derived from the org and is not a parameter: a body naming another namespace, `default` included, is refused with 400 before anything reaches Cloudflare. Every other field is forwarded as written. Create the namespace first (POST /v1/cloudflare/ai-search/namespace). Requires org admin.
+         * @summary Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it.
+         * @param {CloudflareApiPostCloudflareAiSearchInstancesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCloudflareAiSearchInstances(requestParameters: CloudflareApiPostCloudflareAiSearchInstancesRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postCloudflareAiSearchInstances(requestParameters.cloudflareAISearchInstanceCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates the org\'s AI Search namespace on its Cloudflare account. The name is derived from the org, never chosen; a `name` other than that one is refused with 400. Create it once, before the first instance. Requires org admin.
+         * @summary Creates the org\'s AI Search namespace on its Cloudflare account.
+         * @param {CloudflareApiPostCloudflareAiSearchNamespaceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCloudflareAiSearchNamespace(requestParameters: CloudflareApiPostCloudflareAiSearchNamespaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postCloudflareAiSearchNamespace(requestParameters.cloudflareAiSearchNamespaceCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
@@ -2172,6 +2666,16 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.cloudflarePurgeIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it. Every field is forwarded as written except the namespace: a `namespace` other than the org\'s own, or any `new_namespace`, is refused with 400, because moving an instance discards its index. A namespace change is a replacement — new instance, dual-write, backfill, cutover — never an update. Requires org admin.
+         * @summary Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it.
+         * @param {CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.putCloudflareAiSearchInstancesByInstance(requestParameters.instance, requestParameters.cloudflareAISearchInstanceUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
          * @summary Write a Workers KV value from the request body
          * @param {CloudflareApiPutCloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
@@ -2193,6 +2697,20 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
         },
     };
 };
+
+/**
+ * Request parameters for deleteCloudflareAiSearchInstancesByInstance operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest
+ */
+export interface CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest {
+    /**
+     * Instance is the AI Search instance id.
+     * @type {string}
+     * @memberof CloudflareApiDeleteCloudflareAiSearchInstancesByInstance
+     */
+    readonly instance: string
+}
 
 /**
  * Request parameters for deleteCloudflareD1DatabasesByDatabase operation in CloudflareApi.
@@ -2325,6 +2843,41 @@ export interface CloudflareApiDeleteCloudflareWorkersZonesByZoneRoutesByRouteReq
      * @memberof CloudflareApiDeleteCloudflareWorkersZonesByZoneRoutesByRoute
      */
     readonly route: string
+}
+
+/**
+ * Request parameters for getCloudflareAiSearchInstances operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiGetCloudflareAiSearchInstancesRequest
+ */
+export interface CloudflareApiGetCloudflareAiSearchInstancesRequest {
+    /**
+     * Page is the 1-based page of instances to return.
+     * @type {string}
+     * @memberof CloudflareApiGetCloudflareAiSearchInstances
+     */
+    readonly page?: string
+
+    /**
+     * PerPage is how many instances one page holds.
+     * @type {string}
+     * @memberof CloudflareApiGetCloudflareAiSearchInstances
+     */
+    readonly perPage?: string
+}
+
+/**
+ * Request parameters for getCloudflareAiSearchInstancesByInstance operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest
+ */
+export interface CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest {
+    /**
+     * Instance is the AI Search instance id.
+     * @type {string}
+     * @memberof CloudflareApiGetCloudflareAiSearchInstancesByInstance
+     */
+    readonly instance: string
 }
 
 /**
@@ -2580,6 +3133,34 @@ export interface CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest {
 }
 
 /**
+ * Request parameters for postCloudflareAiSearchInstances operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiPostCloudflareAiSearchInstancesRequest
+ */
+export interface CloudflareApiPostCloudflareAiSearchInstancesRequest {
+    /**
+     * 
+     * @type {CloudflareAISearchInstanceCreate}
+     * @memberof CloudflareApiPostCloudflareAiSearchInstances
+     */
+    readonly cloudflareAISearchInstanceCreate: CloudflareAISearchInstanceCreate
+}
+
+/**
+ * Request parameters for postCloudflareAiSearchNamespace operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiPostCloudflareAiSearchNamespaceRequest
+ */
+export interface CloudflareApiPostCloudflareAiSearchNamespaceRequest {
+    /**
+     * 
+     * @type {CloudflareAiSearchNamespaceCreateIn}
+     * @memberof CloudflareApiPostCloudflareAiSearchNamespace
+     */
+    readonly cloudflareAiSearchNamespaceCreateIn: CloudflareAiSearchNamespaceCreateIn
+}
+
+/**
  * Request parameters for postCloudflareD1Databases operation in CloudflareApi.
  * @export
  * @interface CloudflareApiPostCloudflareD1DatabasesRequest
@@ -2762,6 +3343,27 @@ export interface CloudflareApiPostCloudflareZonesByZonePurgeRequest {
 }
 
 /**
+ * Request parameters for putCloudflareAiSearchInstancesByInstance operation in CloudflareApi.
+ * @export
+ * @interface CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest
+ */
+export interface CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareApiPutCloudflareAiSearchInstancesByInstance
+     */
+    readonly instance: string
+
+    /**
+     * 
+     * @type {CloudflareAISearchInstanceUpdate}
+     * @memberof CloudflareApiPutCloudflareAiSearchInstancesByInstance
+     */
+    readonly cloudflareAISearchInstanceUpdate: CloudflareAISearchInstanceUpdate
+}
+
+/**
  * Request parameters for putCloudflareKvNamespacesByNamespaceValuesByKey operation in CloudflareApi.
  * @export
  * @interface CloudflareApiPutCloudflareKvNamespacesByNamespaceValuesByKeyRequest
@@ -2810,6 +3412,18 @@ export interface CloudflareApiPutCloudflareWorkersScriptsByScriptRequest {
  * @extends {BaseAPI}
  */
 export class CloudflareApi extends BaseAPI {
+    /**
+     * Deletes an AI Search instance from the org\'s own namespace, and its index with it. Requires org admin.
+     * @summary Deletes an AI Search instance from the org\'s own namespace, and its index with it.
+     * @param {CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public deleteCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiDeleteCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).deleteCloudflareAiSearchInstancesByInstance(requestParameters.instance, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Deletes a D1 database and everything stored in it. Requires org admin.
      * @summary Deletes a D1 database and everything stored in it.
@@ -2907,6 +3521,41 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
+     * Lists the AI Search instances in the org\'s own namespace on its Cloudflare account. Instances in any other namespace, `default` included, are not this org\'s and are never listed. Any org member may read.
+     * @summary Lists the AI Search instances in the org\'s own namespace on its Cloudflare account.
+     * @param {CloudflareApiGetCloudflareAiSearchInstancesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public getCloudflareAiSearchInstances(requestParameters: CloudflareApiGetCloudflareAiSearchInstancesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).getCloudflareAiSearchInstances(requestParameters.page, requestParameters.perPage, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one AI Search instance from the org\'s own namespace. An instance in any other namespace is not found. Any org member may read.
+     * @summary Reads one AI Search instance from the org\'s own namespace.
+     * @param {CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public getCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiGetCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).getCloudflareAiSearchInstancesByInstance(requestParameters.instance, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers which Cloudflare AI Search namespace the caller\'s org owns. The name is derived from the org, so it is answered without contacting Cloudflare and without a connected token; it is the same on every call and differs for every other org. Any org member may read.
+     * @summary Answers which Cloudflare AI Search namespace the caller\'s org owns.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public getCloudflareAiSearchNamespace(options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).getCloudflareAiSearchNamespace(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the D1 databases on the org\'s Cloudflare account. Any org member may read.
      * @summary Lists the D1 databases on the org\'s Cloudflare account.
      * @param {CloudflareApiGetCloudflareD1DatabasesRequest} requestParameters Request parameters.
@@ -2978,6 +3627,17 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
+     * Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).  A hard limit (one that stops the product) at or past the threshold is also raised on the platform\'s alert path when it is read, so a read is the warning BEFORE Cloudflare stops the layer, not after. Needs a token that can read the account\'s billing; without it Cloudflare\'s own 403 is relayed. Any org member may read.
+     * @summary Lists the spending limits on the org\'s Cloudflare account — the Workers and Durable Objects ceilings Cloudflare stops work at — each with this billing period\'s spend and where it stands against the warning threshold below the cap (`warnPct`).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public getCloudflareSpendLimits(options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).getCloudflareSpendLimits(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the Worker scripts on the org\'s Cloudflare account. Any org member may read.
      * @summary Lists the Worker scripts on the org\'s Cloudflare account.
      * @param {*} [options] Override http request option.
@@ -3045,6 +3705,30 @@ export class CloudflareApi extends BaseAPI {
      */
     public getCloudflareZonesByZoneAnalytics(requestParameters: CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest, options?: RawAxiosRequestConfig) {
         return CloudflareApiFp(this.configuration).getCloudflareZonesByZoneAnalytics(requestParameters.zone, requestParameters.since, requestParameters.until, requestParameters.continuous, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it. The namespace is derived from the org and is not a parameter: a body naming another namespace, `default` included, is refused with 400 before anything reaches Cloudflare. Every other field is forwarded as written. Create the namespace first (POST /v1/cloudflare/ai-search/namespace). Requires org admin.
+     * @summary Creates an AI Search instance in the org\'s own namespace on its Cloudflare account and relays Cloudflare\'s record of it.
+     * @param {CloudflareApiPostCloudflareAiSearchInstancesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public postCloudflareAiSearchInstances(requestParameters: CloudflareApiPostCloudflareAiSearchInstancesRequest, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).postCloudflareAiSearchInstances(requestParameters.cloudflareAISearchInstanceCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates the org\'s AI Search namespace on its Cloudflare account. The name is derived from the org, never chosen; a `name` other than that one is refused with 400. Create it once, before the first instance. Requires org admin.
+     * @summary Creates the org\'s AI Search namespace on its Cloudflare account.
+     * @param {CloudflareApiPostCloudflareAiSearchNamespaceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public postCloudflareAiSearchNamespace(requestParameters: CloudflareApiPostCloudflareAiSearchNamespaceRequest, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).postCloudflareAiSearchNamespace(requestParameters.cloudflareAiSearchNamespaceCreateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3165,6 +3849,18 @@ export class CloudflareApi extends BaseAPI {
      */
     public postCloudflareZonesByZonePurge(requestParameters: CloudflareApiPostCloudflareZonesByZonePurgeRequest, options?: RawAxiosRequestConfig) {
         return CloudflareApiFp(this.configuration).postCloudflareZonesByZonePurge(requestParameters.zone, requestParameters.cloudflarePurgeIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it. Every field is forwarded as written except the namespace: a `namespace` other than the org\'s own, or any `new_namespace`, is refused with 400, because moving an instance discards its index. A namespace change is a replacement — new instance, dual-write, backfill, cutover — never an update. Requires org admin.
+     * @summary Updates an AI Search instance in the org\'s own namespace and relays Cloudflare\'s record of it.
+     * @param {CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudflareApi
+     */
+    public putCloudflareAiSearchInstancesByInstance(requestParameters: CloudflareApiPutCloudflareAiSearchInstancesByInstanceRequest, options?: RawAxiosRequestConfig) {
+        return CloudflareApiFp(this.configuration).putCloudflareAiSearchInstancesByInstance(requestParameters.instance, requestParameters.cloudflareAISearchInstanceUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
