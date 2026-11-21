@@ -2,6 +2,8 @@
 
 # hanzoai
 
+[![Open in Hanzo](https://hanzo.app/badges/open-in-hanzo.svg)](https://hanzo.app/dev/open?repo=github.com/hanzoai/js-sdk&ref=main&action=open) [![Edit with Hanzo](https://hanzo.app/badges/edit-with-hanzo.svg)](https://hanzo.app/dev/open?repo=github.com/hanzoai/js-sdk&ref=main&action=edit) [![Deploy with Hanzo](https://hanzo.app/badges/deploy-with-hanzo.svg)](https://hanzo.app/dev/open?repo=github.com/hanzoai/js-sdk&ref=main&action=deploy)
+
 TypeScript client for the [Hanzo API](https://api.hanzo.ai), generated from the
 API's own OpenAPI document, with budget, policy, audit, search, kb and graph
 written over it by hand.
