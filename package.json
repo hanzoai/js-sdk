@@ -39,6 +39,7 @@
   "exports": {
     ".": {
       "types": "./dist/hanzo.d.ts",
+      "module": "./dist/esm/hanzo.js",
       "import": "./dist/hanzo.js",
       "require": "./dist/hanzo.js"
     }

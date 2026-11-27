@@ -16,8 +16,11 @@
 // joins this check the release cloud starts serving it and leaves the release it
 // stops, so there is nothing to edit when the API moves — and nothing that can
 // quietly stop covering what it claims to.
-import { readdirSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const api = fileURLToPath(new URL('../src/api/', import.meta.url));
@@ -36,16 +39,57 @@ const fail = (msg) => {
 // nothing".
 if (!declared.length) fail('src/api declares no API class — read nothing, proved nothing');
 
-const hanzo = createRequire(import.meta.url)('hanzoai');
-const missing = declared.filter((name) => typeof hanzo[name] !== 'function');
-if (missing.length) {
-  fail(`${missing.length} API class(es) the source declares are not exported from the ` +
-       `build:\n  ${missing.slice(0, 10).join('\n  ')}`);
+function verifySurface(mod, label) {
+  const missing = declared.filter((name) => typeof mod[name] !== 'function');
+  if (missing.length) {
+    fail(`[${label}] ${missing.length} API class(es) the source declares are not exported from the ` +
+         `build:\n  ${missing.slice(0, 10).join('\n  ')}`);
+  }
+  const ai = new mod.AiApi(new mod.Configuration({ basePath: 'https://api.hanzo.ai' }));
+  if (typeof ai.getModels !== 'function') fail(`[${label}] AiApi has no getModels`);
+  if (typeof mod.Client !== 'function') fail(`[${label}] Client is not exported`);
 }
 
-// One construction and one call site, so what is proved is that a class WORKS
-// and not merely that a name is bound to something.
-const ai = new hanzo.AiApi(new hanzo.Configuration({ basePath: 'https://api.hanzo.ai' }));
-if (typeof ai.getModels !== 'function') fail('AiApi has no getModels');
+// 1. CommonJS consumer check
+const cjsMod = createRequire(import.meta.url)('hanzoai');
+verifySurface(cjsMod, 'CJS');
 
-console.log(`smoke: ${declared.length} API classes exported from the build; AiApi constructs`);
+// 2. Node ESM consumer check
+const esmMod = await import('hanzoai');
+verifySurface(esmMod, 'ESM');
+
+// 3. TypeScript strict consumer check against the built .d.ts surface
+const rootDir = fileURLToPath(new URL('../', import.meta.url));
+const tmp = mkdtempSync(join(tmpdir(), 'hanzoai-ts-smoke-'));
+try {
+  writeFileSync(
+    join(tmp, 'consumer.ts'),
+    [
+      "import { Client, AiApi, Configuration } from 'hanzoai';",
+      'const c = new Client();',
+      "const ai = new AiApi(new Configuration({ basePath: 'https://api.hanzo.ai' }));",
+      'export { c, ai };',
+    ].join('\n'),
+  );
+  writeFileSync(
+    join(tmp, 'tsconfig.json'),
+    JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        noEmit: true,
+        target: 'ES2020',
+        module: 'node16',
+        moduleResolution: 'node16',
+        skipLibCheck: false,
+        paths: { hanzoai: [join(rootDir, 'dist/hanzo.d.ts')] },
+      },
+      include: ['consumer.ts'],
+    }),
+  );
+  const tscBin = join(rootDir, 'node_modules', 'typescript', 'bin', 'tsc');
+  execFileSync(process.execPath, [tscBin, '-p', join(tmp, 'tsconfig.json')], { stdio: 'inherit' });
+} finally {
+  rmSync(tmp, { recursive: true, force: true });
+}
+
+console.log(`smoke: ${declared.length} API classes verified across CJS, ESM, and strict TypeScript`);
