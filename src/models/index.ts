@@ -1315,7 +1315,7 @@ export * from './iam-workspaces-delete-output';
 export * from './iam-workspaces-input';
 export * from './iam-workspaces-list-output';
 export * from './inbox-item';
-export * from './index';
+export type Index = Record<string, unknown>;
 export * from './index-enqueued';
 export * from './index-index-count';
 export * from './index-index-documents';
