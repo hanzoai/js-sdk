@@ -21,11 +21,11 @@
   },
   "scripts": {
     "build": "tsc && tsc -p tsconfig.esm.json",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p test/consumers/tsconfig.strict.json",
     "examples": "tsc -p examples/tsconfig.json",
     "smoke": "node scripts/smoke.mjs",
     "wire": "node --test test/*.test.mjs",
-    "test": "npm run build && npm run smoke && npm run wire && npm run examples",
+    "test": "npm run build && npm run smoke && npm run wire && npm run examples && tsc -p test/consumers/tsconfig.strict.json",
     "generate": "./scripts/generate.sh",
     "prepublishOnly": "npm run build"
   },

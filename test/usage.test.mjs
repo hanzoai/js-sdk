@@ -534,7 +534,8 @@ test('no hand-written name hides a generated one, but Configuration', () => {
   // names a regeneration can add.
   const generated = new Set();
   const root = new URL('../', import.meta.url);
-  for (const f of readFileSync(new URL('.generated', root), 'utf8').split('\n')) {
+  for (let f of readFileSync(new URL('.generated', root), 'utf8').split('\n')) {
+    f = f.trim();
     if (!f.endsWith('.ts')) continue;
     for (const m of readFileSync(new URL(f, root), 'utf8').matchAll(/^export (?:interface|type|class|const|function|enum) (\w+)/gm)) {
       generated.add(m[1]);
